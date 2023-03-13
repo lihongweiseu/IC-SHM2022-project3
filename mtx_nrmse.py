@@ -29,9 +29,9 @@ for i in range(10):
       if i == j:
           pass
       else:
-        c = round(np.log10(nr)[j, i],1)
-        ax.text(i, j, str(c), va='center', ha='center',fontname='Times New Roman')
-plt.savefig('md_verify.pdf', dpi=600,bbox_inches='tight')
+        c = round(np.log10(nr)[j, i],2)
+        ax.text(i, j, str(c), va='center', ha='center',fontname='Times New Roman',fontsize =8)
+plt.savefig('fig_md_verify.pdf', dpi=1200,bbox_inches='tight')
 plt.show()
 
 
