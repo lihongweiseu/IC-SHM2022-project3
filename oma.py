@@ -31,7 +31,7 @@ class rand_vib:
         ax.set_xlabel(r'Time (s)', fontsize=9, labelpad=1)    
         ax.set_ylabel(r'Acceleration ($\mathregular{m/s^2}$)', fontsize=9, labelpad=1)      
         ax.set_ylim([-0.3, 0.3])
-        ax.set_yticks(np.arange(-0.3, 0.31, 0.2))
+        ax.set_yticks(np.arange(-0.3, 0.31, 0.1))
         ax.set_xlim([0, 60])
         ax.set_xticks(np.arange(0, 60.1, 10))
         legend = ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0), borderpad=0.3, borderaxespad=0, handlelength=2.8,
@@ -41,6 +41,9 @@ class rand_vib:
         legend.get_frame().set_alpha(None)
         for obj in legend.legendHandles:
             obj.set_lw(0.75)
+        ax.text(2, 0.22, '(a)')
+        ax.tick_params(axis='x', direction='in')
+        ax.tick_params(axis='y', direction='in')
 
         ax = fig.add_subplot(212)    
         f1, pxx1 = self.psd_analysis(dim=0)
@@ -62,6 +65,10 @@ class rand_vib:
         legend.get_frame().set_alpha(None)
         for obj in legend.legendHandles:
             obj.set_lw(0.75)
+        ax.text(6.2, -1.8, '(b)')
+        ax.tick_params(axis='x', direction='in')
+        ax.tick_params(axis='y', direction='in')
+
         plt.savefig('./figs/threesignal.pdf',  format = "pdf",
                     dpi=1200,bbox_inches='tight')
 
@@ -107,14 +114,15 @@ class rand_vib:
 mat = io.loadmat('./data/train_dataset/train_4.mat')
 mtx = mat['A']
 vib_analysis = rand_vib(signal_mtx=mtx)
-ms,_ = vib_analysis.fdd()
-ms_r = vib_analysis.ms_ratio(ms)
-print(ms_r)
-beam = beam_fem()
-beam_ms = beam.modeshape(1, alphas=[0.0,0.4,0.0])[1:-1]
-beam_ms_r = vib_analysis.ms_ratio(beam_ms)
-print(beam_ms_r)
-print(LA.norm(ms_r-np.array(beam_ms_r),ord=2))
+# fdd analysis
+# ms,_ = vib_analysis.fdd()
+# ms_r = vib_analysis.ms_ratio(ms)
+# print(ms_r)
+# beam = beam_fem()
+# beam_ms = beam.modeshape(1, alphas=[0.0,0.4,0.0])[1:-1]
+# beam_ms_r = vib_analysis.ms_ratio(beam_ms)
+# print(beam_ms_r)
+# print(LA.norm(ms_r-np.array(beam_ms_r),ord=2))
 
 # vib_analysis.plot_first_three_psd()
 vib_analysis.plot_first_three_signal()

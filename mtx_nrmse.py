@@ -29,9 +29,11 @@ for i in range(10):
       if i == j:
           pass
       else:
-        c = round(np.log10(nr)[j, i],2)
+        c = '%.2f' %np.log10(nr[j, i])
         ax.text(i, j, str(c), va='center', ha='center',fontname='Times New Roman',fontsize =8)
-plt.savefig('fig_md_verify.pdf', dpi=1200,bbox_inches='tight')
+ax.xaxis.set_ticks_position('none')
+ax.yaxis.set_ticks_position('none') 
+plt.savefig('./figs/nrmse_mtx.pdf', dpi=1200,bbox_inches='tight')
 plt.show()
 
 
