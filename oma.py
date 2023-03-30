@@ -19,31 +19,33 @@ class rand_vib:
         return f, pxx
 
     def plot_first_three_signal(self):
-        num = 6000
+        num = 3000
         T = np.linspace(0,(num-1)/100,num)
         col = ['k', 'b', 'r']
         cm = 1 / 2.54
         fig = plt.figure(figsize=(16 * cm, 14 * cm))
         ax = fig.add_subplot(211)
         ax.plot(T,self.signal_mtx[0,0:num], color=col[0], label = 'First sensor')
-        ax.plot(T,self.signal_mtx[1,0:num], color=col[1], label = 'Second sensor')
-        ax.plot(T,self.signal_mtx[2,0:num], color=col[2], label = 'Third sensor', zorder=1)
-        ax.set_xlabel(r'Time (s)', fontsize=9, labelpad=1)    
-        ax.set_ylabel(r'Acceleration ($\mathregular{m/s^2}$)', fontsize=9, labelpad=1)      
+        ax.plot(T,self.signal_mtx[1,0:num], color=col[1], dashes=[8, 4], label = 'Second sensor')
+        ax.plot(T,self.signal_mtx[2,0:num], color=col[2], dashes=[2, 2], label = 'Third sensor', zorder=1)
+        ax.set_xlabel(r'Time (s)', fontsize=8, labelpad=1)    
+        ax.set_ylabel(r'Acceleration ($\mathregular{m/s^2}$)', fontsize=8, labelpad=1)      
         ax.set_ylim([-0.3, 0.3])
         ax.set_yticks(np.arange(-0.3, 0.31, 0.1))
-        ax.set_xlim([0, 60])
-        ax.set_xticks(np.arange(0, 60.1, 10))
-        legend = ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0), borderpad=0.3, borderaxespad=0, handlelength=2.8,
-                        edgecolor='black', fontsize=8, ncol=3, columnspacing=0.5, handletextpad=0.3)  # labelspacing=0
+        ax.set_xlim([0, 30])
+        ax.set_xticks(np.arange(0, 30.1, 5))
+        ax.tick_params(axis='x', labelsize=8)
+        ax.tick_params(axis='y', labelsize=8)
+        legend = ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0), borderpad=0.3, borderaxespad=0, handlelength=2.8,edgecolor='black', fontsize=8, ncol=3, columnspacing=0.5, handletextpad=0.3)  
         legend.get_frame().set_boxstyle('Square', pad=0.0)
         legend.get_frame().set_lw(0.75)
         legend.get_frame().set_alpha(None)
         for obj in legend.legendHandles:
             obj.set_lw(0.75)
-        ax.text(2, 0.22, '(a)')
+        ax.text(-1.8, -0.37, '(a)', fontsize=8)
         ax.tick_params(axis='x', direction='in')
         ax.tick_params(axis='y', direction='in')
+        ax.grid()
 
         ax = fig.add_subplot(212)    
         f1, pxx1 = self.psd_analysis(dim=0)
@@ -52,12 +54,14 @@ class rand_vib:
         ax.plot(f1,np.log10(pxx1),color=col[0], lw=1, label='First sensor')
         ax.plot(f2,np.log10(pxx2),color=col[1], dashes=[8, 4], lw=1, label='Second sensor')
         ax.plot(f3,np.log10(pxx3),color=col[2], dashes=[2, 2], lw=1, label='Third sensor')  
-        ax.set_xlabel(r'Frequency (Hz)', fontsize=9, labelpad=1)
-        ax.set_ylabel(r'PSD ($\mathregular{(m/s^2)^2}$/Hz)', fontsize=9, labelpad=1)      
+        ax.set_xlabel(r'Frequency (Hz)', fontsize=8, labelpad=1)
+        ax.set_ylabel(r'PSD ($\mathregular{(m/s^2)^2}$/Hz)', fontsize=8, labelpad=1)      
         ax.set_xlim([5, 40])
         ax.set_xticks(np.arange(5, 40.1, 5))     
         ax.set_ylim([-7, -1])
         ax.set_yticks(np.arange(-7, -0.9, 1))  
+        ax.tick_params(axis='x', labelsize=8)
+        ax.tick_params(axis='y', labelsize=8)
         legend = ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0), borderpad=0.3, borderaxespad=0, handlelength=2.8,
                    edgecolor='black', fontsize=8, ncol=3, columnspacing=0.5, handletextpad=0.3)  # labelspacing=0
         legend.get_frame().set_boxstyle('Square', pad=0.0)
@@ -65,11 +69,12 @@ class rand_vib:
         legend.get_frame().set_alpha(None)
         for obj in legend.legendHandles:
             obj.set_lw(0.75)
-        ax.text(6.2, -1.8, '(b)')
+        ax.text(3.3, -7.6, '(b)', fontsize=8)
         ax.tick_params(axis='x', direction='in')
         ax.tick_params(axis='y', direction='in')
+        ax.grid()
 
-        plt.savefig('./figs/threesignal.pdf',  format = "pdf",
+        plt.savefig('./figs/F_threesignal.pdf',  format = "pdf",
                     dpi=1200,bbox_inches='tight')
 
     def ms_ratio(self,ms):
@@ -111,21 +116,21 @@ class rand_vib:
             ms = np.average(np.array(ms),axis=0)
         return ms,nf
 
-mat = io.loadmat('./data/train_dataset/train_4.mat')
+mat = io.loadmat('./data/train_dataset/train_8.mat')
 mtx = mat['A']
 vib_analysis = rand_vib(signal_mtx=mtx)
 # fdd analysis
-# ms,_ = vib_analysis.fdd()
-# ms_r = vib_analysis.ms_ratio(ms)
-# print(ms_r)
-# beam = beam_fem()
-# beam_ms = beam.modeshape(1, alphas=[0.0,0.4,0.0])[1:-1]
-# beam_ms_r = vib_analysis.ms_ratio(beam_ms)
-# print(beam_ms_r)
+ms,_ = vib_analysis.fdd()
+ms_r = vib_analysis.ms_ratio(ms)
+print(ms_r)
+beam = beam_fem()
+beam_ms = beam.modeshape(1, alphas=[0.2,0.2,0.0])[1:-1]
+beam_ms_r = vib_analysis.ms_ratio(beam_ms)
+print(beam_ms_r)
+print(np.array(beam_ms_r)/np.array(ms_r)-1)
 # print(LA.norm(ms_r-np.array(beam_ms_r),ord=2))
 
-# vib_analysis.plot_first_three_psd()
-vib_analysis.plot_first_three_signal()
-plt.show()
+# vib_analysis.plot_first_three_signal()
+# plt.show()
 # ms_ratio = oma_svd(signal_mtx,nperseg_num=2000)
 # print(ms_ratio)
