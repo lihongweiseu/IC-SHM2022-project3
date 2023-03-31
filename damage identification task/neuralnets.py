@@ -6,8 +6,6 @@ from torch.utils.data import TensorDataset
 from torch.utils.data import DataLoader
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-print(device)
 
 # Generate training set
 # grid_num = 101
@@ -61,67 +59,74 @@ class NeuralNetwork(nn.Module):
         return x
 
 
-def train_one_epoch(model, data_loader, loss_fn, optimizer):
-    running_loss = 0.
-    last_loss = 0.
-    for i, data in enumerate(data_loader):
-        inputs, labels = data
-        inputs = inputs.to(device)
-        inputs = inputs.float()
-        labels = labels.to(device)
-        labels = labels.float()
-        optimizer.zero_grad()
-        outputs = model(inputs)
-        loss = loss_fn(outputs, labels)
-        loss.backward()
-        optimizer.step()
-        running_loss += loss.item()
-        if i % 100 == 99:
-            last_loss = running_loss / 100  # loss per batch
-            print('  batch {} loss: {}'.format(i + 1, last_loss))
-            running_loss = 0.
-    return last_loss
+class Train_my_NN():
+    def __init__(self, model, train_data_loader, test_data_loader, loss_fn, optimizer, epochs):
+        self.model = model
+        self.train_data_loader = train_data_loader
+        self.test_data_loader = test_data_loader
+        self.loss_fn = loss_fn
+        self.optimizer = optimizer
+        self.epochs = epochs
+
+    def train_one_epoch(self):
+        running_loss = 0.
+        last_loss = 0.
+        for i, data in enumerate(self.train_data_loader):
+            inputs, labels = data
+            inputs = inputs.float()
+            labels = labels.float()
+            self.optimizer.zero_grad()
+            outputs = self.model(inputs)
+            loss = self.loss_fn(outputs, labels)
+            loss.backward()
+            self.optimizer.step()
+            running_loss += loss.item()
+            if i % 100 == 99:
+                last_loss = running_loss / 100  # loss per batch
+                print('  batch {} loss: {}'.format(i + 1, last_loss))
+                running_loss = 0.
+        return last_loss
+
+    def test_one_epoch(self):
+        running_loss = 0.
+        for i, data in enumerate(self.test_data_loader):
+            inputs, labels = data
+            inputs = inputs.float()
+            labels = labels.float()
+            outputs = self.model(inputs)
+            loss = self.loss_fn(outputs, labels)
+            running_loss += loss.item()
+        return running_loss/len(self.test_data_loader)
+
+    def train_nn(self):
+        train_loss = []
+        test_loss = []
+        for epoch in range(self.epochs):
+            print('Epoch {}/{}'.format(epoch + 1, self.epochs))
+            train_loss.append(self.train_one_epoch())
+            test_loss.append(self.test_one_epoch())
+            print('  train loss: {}'.format(train_loss[-1]))
+            print('  test loss: {}'.format(test_loss[-1]))
+        print('Finished training')
+        return train_loss, test_loss
+
+    def save_model(self, path):
+        torch.save(self.model.state_dict(), path)
 
 
-def test_one_epoch(model, data_loader, loss_fn):
-    running_loss = 0.
-    for i, data in enumerate(data_loader):
-        inputs, labels = data
-        inputs = inputs.to(device)
-        inputs = inputs.float()
-        labels = labels.to(device)
-        labels = labels.float()
-        outputs = model(inputs)
-        loss = loss_fn(outputs, labels)
-        running_loss += loss.item()
-    return running_loss/len(data_loader)
-
-
-def train_nn(model, train_data_loader, test_data_loader, loss_fn, optimizer, epochs):
-    train_loss = []
-    test_loss = []
-    for t in range(epochs):
-        print('Epoch {} of {}'.format(t + 1, epochs))
-        model.train(True)
-        avg_train_loss = train_one_epoch(
-            model, train_data_loader, loss_fn, optimizer)
-        model.train(False)
-        train_loss.append(avg_train_loss)
-        avg_test_loss = test_one_epoch(model, test_data_loader, loss_fn)
-        test_loss.append(avg_test_loss)
-        print('  train loss: {}'.format(avg_train_loss))
-        print('  test loss: {}'.format(avg_test_loss))
-    print('Finished training')
-
-
+num_neuron = 128
+num_hidden_layer = 3
+learning_rate = 1e-1
+nn_structure = [4]+[num_neuron]*num_hidden_layer+[3]
+net = NeuralNetwork(nn_structure)
 training_set = torch.load(
     './damage identification task/data/neural_nets/train_data.pt')
 test_set = torch.load(
     './damage identification task/data/neural_nets/test_data.pt')
 training_loader = DataLoader(training_set, batch_size=1000, shuffle=True)
 test_loader = DataLoader(test_set, batch_size=1000, shuffle=True)
-net = NeuralNetwork([4, 128, 128, 128, 3])
-net.to(device)
-optimizer = torch.optim.SGD(net.parameters(), lr=1e-1)
 loss_function = nn.MSELoss()
-train_nn(net, training_loader, test_loader, loss_function, optimizer, 3000)
+optimizer = torch.optim.SGD(net.parameters(), lr=1e-1)
+train_my_nn = Train_my_NN(net, training_loader, test_loader,
+                          loss_function, optimizer, 300)
+train_loss, test_loss = train_my_nn.train_nn()
