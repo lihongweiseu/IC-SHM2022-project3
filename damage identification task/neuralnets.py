@@ -4,40 +4,9 @@ import torch.nn as nn
 from fembeam import beam_fem
 from torch.utils.data import TensorDataset
 from torch.utils.data import DataLoader
+from bayes_opt import BayesOpt
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-
-# Generate training set
-# grid_num = 101
-# alphas = np.linspace(0.1, 1, grid_num)
-# alphas = np.array(np.meshgrid(alphas, alphas, alphas)
-#                   ).reshape(3, -1).transpose()
-# alphas = np.ones_like(alphas)-alphas
-# beam = beam_fem()
-# md_1st_r = []
-# ms_ratio_undam = beam.md1st_ratio()
-# for i in range(grid_num**3):
-#     md_1st_r.append(beam.nn_input(alphas[i, :], ms_ratio_undam))
-#     if i % (grid_num**2) == 0:
-#         print("%.2f" % ((i/(grid_num**3))*100), '%')
-# md_1st_r = np.array(md_1st_r)
-# train_data = TensorDataset(torch.tensor(md_1st_r), torch.tensor(alphas))
-# torch.save(
-#     train_data, './damage identification task/data/neural_nets/train_data.pt')
-
-# Generate test set
-# alphas_test = np.random.rand(300000, 3)*0.9
-# md_1st_r_test = []
-# for i in range(len(alphas_test)):
-#     md_1st_r_test.append(beam.nn_input(alphas_test[i, :], ms_ratio_undam))
-#     if i % (3000) == 0:
-#         print("%.2f" % (i/(3000)), '%')
-# md_1st_r_test = np.array(md_1st_r_test)
-# test_data = TensorDataset(torch.tensor(md_1st_r_test),
-#                           torch.tensor(alphas_test))
-# torch.save(test_data, './damage identification task/data/neural_nets/test_data.pt')
-
-# neural network
 
 
 class NeuralNetwork(nn.Module):
@@ -114,19 +83,88 @@ class Train_my_NN():
         torch.save(self.model.state_dict(), path)
 
 
-num_neuron = 128
-num_hidden_layer = 3
-learning_rate = 1e-1
-nn_structure = [4]+[num_neuron]*num_hidden_layer+[3]
-net = NeuralNetwork(nn_structure)
-training_set = torch.load(
-    './damage identification task/data/neural_nets/train_data.pt')
-test_set = torch.load(
-    './damage identification task/data/neural_nets/test_data.pt')
-training_loader = DataLoader(training_set, batch_size=1000, shuffle=True)
-test_loader = DataLoader(test_set, batch_size=1000, shuffle=True)
-loss_function = nn.MSELoss()
-optimizer = torch.optim.SGD(net.parameters(), lr=1e-1)
-train_my_nn = Train_my_NN(net, training_loader, test_loader,
-                          loss_function, optimizer, 300)
-train_loss, test_loss = train_my_nn.train_nn()
+class Establish_nn():
+    def __init__(self, num_neuron, num_hidden_layer, learning_rate, data_path):
+        self.num_neuron = num_neuron
+        self.num_hidden_layer = num_hidden_layer
+        self.learning_rate = learning_rate
+        self.data_path = data_path
+        self.nn_structure = [4]+[num_neuron]*num_hidden_layer+[3]
+        self.net = NeuralNetwork(self.nn_structure)
+
+    def train_one_nn(self):
+        training_set = torch.load(self.data_path + 'train_data.pt')
+        test_set = torch.load(self.data_path + 'test_data.pt')
+        training_loader = DataLoader(
+            training_set, batch_size=1000, shuffle=True)
+        test_loader = DataLoader(test_set, batch_size=1000, shuffle=True)
+        loss_function = nn.MSELoss()
+        optimizer = torch.optim.SGD(
+            self.net.parameters(), lr=self.learning_rate)
+        train_my_nn = Train_my_NN(self.net, training_loader, test_loader,
+                                  loss_function, optimizer, 1)
+        train_loss, test_loss = train_my_nn.train_nn()
+        return train_loss, test_loss
+
+
+class establish_nn_bayes_opt():
+    def __init__(self, hist_path, num_max_iter=50):
+        self.hist_path = hist_path
+        self.num_max_iter = num_max_iter
+
+    def iter_bayes_opt(self):
+        nums_neuron = np.linspace(10, 258, 33)
+        nums_hidden_layer = np.linspace(2, 8, 7)
+        nums_lr = np.linspace(-5, 0, 21)
+        test_x = np.meshgrid(nums_neuron, nums_hidden_layer, nums_lr)
+        test_x = np.array(test_x).reshape(3, -1).T
+        train_x = []
+        train_y = []
+        for i in range(self.num_max_iter):
+            if i == 0:
+                nn_model = Establish_nn(128, 4, 1e-1, data_path)
+            else:
+                nn_model = Establish_nn(int(next_x[0]), int(
+                    next_x[1]), 10**next_x[2], data_path)
+            train_loss, test_loss = nn_model.train_one_nn()
+            train_x.append([nn_model.num_neuron,
+                           nn_model.num_hidden_layer, np.log10(nn_model.learning_rate)])
+            train_y.append(np.log10(train_loss[-1]))
+            bayesopt = BayesOpt(torch.FloatTensor(train_x), torch.FloatTensor(
+                train_y), torch.FloatTensor(test_x))
+            next_x = bayesopt.find_next()
+            bayesopt.plot_current_pred()
+            np.savetxt(self.hist_path +
+                       'train_loss'+str(i)+'.txt', np.array(train_loss), delimiter=',')
+            np.savetxt(self.hist_path +
+                       'test_loss'+str(i)+'.txt', np.array(test_loss), delimiter=',')
+            np.savetxt(self.hist_path +
+                       'train_x'+str(i)+'.txt', np.array(train_x), delimiter=',')
+            np.savetxt(self.hist_path +
+                       'train_y'+str(i)+'.txt', np.array(train_y), delimiter=',')
+        np.savetxt(self.hist_path + 'test_x.pt',
+                   np.array(test_x), delimiter=',')
+
+
+if __name__ == '__main__':
+    data_path = './damage identification task/data/neural_nets/'
+    hist_path = './damage identification task/data/neural_nets/hist/'
+    nn_model = Establish_nn(128, 4, 1e-1, data_path)
+    nn_bayes_opt = establish_nn_bayes_opt(hist_path, 30)
+    nn_bayes_opt.iter_bayes_opt()
+# num_neuron = 128
+# num_hidden_layer = 3
+# learning_rate = 1e-1
+# nn_structure = [4]+[num_neuron]*num_hidden_layer+[3]
+# net = NeuralNetwork(nn_structure)
+# training_set = torch.load(
+#     './damage identification task/data/neural_nets/train_data.pt')
+# test_set = torch.load(
+#     './damage identification task/data/neural_nets/test_data.pt')
+# training_loader = DataLoader(training_set, batch_size=1000, shuffle=True)
+# test_loader = DataLoader(test_set, batch_size=1000, shuffle=True)
+# loss_function = nn.MSELoss()
+# optimizer = torch.optim.SGD(net.parameters(), lr=1e-1)
+# train_my_nn = Train_my_NN(net, training_loader, test_loader,
+#                           loss_function, optimizer, 300)
+# train_loss, test_loss = train_my_nn.train_nn()
