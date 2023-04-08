@@ -94,9 +94,15 @@ class beam_fem:
     def modeshape(self, order, alphas=[0.0, 0.0, 0.0], dof_idx=[5, 30, 42, 54, 79], type='acc'):
         # return i-th mode shape value at the locations of two ends and five accelerometers
         # or return a 85*1 vector that represents the modeshape of al dof
-        M = self.assemble_glb_mtx(type='mass')
-        K = self.assemble_glb_mtx(
-            type='stiff', alpha1=alphas[0], alpha2=alphas[1], alpha3=alphas[2])
+        if hasattr(self, 'K'):
+            K = self.K
+        else:
+            K = self.assemble_glb_mtx(
+                type='stiff', alpha1=alphas[0], alpha2=alphas[1], alpha3=alphas[2])
+        if hasattr(self, 'M'):
+            M = self.M
+        else:
+            M = self.assemble_glb_mtx(type='mass')
         freq, Phi = LA.eig(LA.inv(M)@K)
         freq = list(freq)
         freq_copy = freq.copy()
@@ -120,7 +126,12 @@ class beam_fem:
         ms_ratio.append(ms[4] / ms[5])
         return np.array(ms_ratio)
 
-    def nn_input(self, alphas, ms_ratio_undam):
-        # the neural network in put is ms in damaged case minus ms in health state
+    def nn_input(self, alphas, ms_ratio_undam, subtract_norm=True):
+        # if subtract_norm is True, the neural network input is ms in damaged case minus ms in health state
+        # if subtract_norm is False, the neural network input is ms in damaged case
+        # ms_ratio_undam is the ms ratio of undamaged case
         ms_ratio_dam = self.md1st_ratio(alphas)
-        return ms_ratio_dam-ms_ratio_undam
+        if subtract_norm:
+            return ms_ratio_dam-ms_ratio_undam
+        else:
+            return ms_ratio_dam

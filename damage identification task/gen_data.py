@@ -10,7 +10,7 @@ class Gen_Data():
     def __init__(self):
         pass
 
-    def gen_train_data(self, grid_num=91):
+    def gen_train_data(self, grid_num=91, subtract_norm=True):
         # Generate training set
         alphas = np.linspace(0.1, 1, grid_num)
         alphas = np.array(np.meshgrid(alphas, alphas, alphas)
@@ -20,16 +20,21 @@ class Gen_Data():
         md_1st_r = []
         ms_ratio_undam = beam.md1st_ratio()
         for i in range(grid_num**3):
-            md_1st_r.append(beam.nn_input(alphas[i, :], ms_ratio_undam))
+            md_1st_r.append(beam.nn_input(
+                alphas[i, :], ms_ratio_undam, subtract_norm))
             if i % (grid_num**2) == 0:
                 print("%.2f" % ((i/(grid_num**3))*100), '%')
         md_1st_r = np.array(md_1st_r)
         train_data = TensorDataset(
             torch.tensor(md_1st_r), torch.tensor(alphas))
-        torch.save(
-            train_data, './damage identification task/data/neural_nets/train_data.pt')
+        if subtract_norm:
+            torch.save(
+                train_data, './damage identification task/data/neural_nets/train_data.pt')
+        else:
+            torch.save(
+                train_data, './damage identification task/data/neural_nets/train_data_without_norm.pt')
 
-    def gen_test_data(self, num=300000):
+    def gen_test_data(self, num=300000, subtract_norm=True):
         # Generate test set
         alphas_test = np.random.rand(num, 3)*0.9
         md_1st_r_test = []
@@ -37,16 +42,22 @@ class Gen_Data():
         ms_ratio_undam = beam.md1st_ratio()
         for i in range(num):
             md_1st_r_test.append(beam.nn_input(
-                alphas_test[i, :], ms_ratio_undam))
+                alphas_test[i, :], ms_ratio_undam, subtract_norm))
             if i % (num/10) == 0:
                 print("%.2f" % ((i/num)*100), '%')
         md_1st_r_test = np.array(md_1st_r_test)
         test_data = TensorDataset(torch.tensor(
             md_1st_r_test), torch.tensor(alphas_test))
-        torch.save(
-            test_data, './damage identification task/data/neural_nets/test_data.pt')
+        if subtract_norm:
+            torch.save(
+                test_data, './damage identification task/data/neural_nets/test_data.pt')
+        else:
+            torch.save(
+                test_data, './damage identification task/data/neural_nets/test_data_without_norm.pt')
 
 
 My_data = Gen_Data()
 My_data.gen_train_data()
 My_data.gen_test_data()
+My_data.gen_train_data(subtract_norm=False)
+My_data.gen_test_data(subtract_norm=False)
