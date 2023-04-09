@@ -1,13 +1,64 @@
 import numpy as np
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, TensorDataset
 from skopt import gp_minimize, dump, load
 from skopt.space import Real, Integer
 from skopt.plots import plot_convergence
 import matplotlib.pyplot as plt
+from fembeam import beam_fem
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+
+
+class Gen_Data():
+    def __init__(self, path):
+        self.path = path
+
+    def gen_train_data(self, grid_num=91, subtract_norm=True):
+        # Generate training set
+        alphas = np.linspace(0.1, 1, grid_num)
+        alphas = np.array(np.meshgrid(alphas, alphas, alphas)
+                          ).reshape(3, -1).transpose()
+        alphas = np.ones_like(alphas)-alphas
+        beam = beam_fem()
+        md_1st_r = []
+        ms_ratio_undam = beam.md1st_ratio()
+        for i in range(grid_num**3):
+            md_1st_r.append(beam.nn_input(
+                alphas[i, :], ms_ratio_undam, subtract_norm))
+            if i % (grid_num**2) == 0:
+                print("%.2f" % ((i/(grid_num**3))*100), '%')
+        md_1st_r = np.array(md_1st_r)
+        train_data = TensorDataset(
+            torch.tensor(md_1st_r), torch.tensor(alphas))
+        if subtract_norm:
+            torch.save(
+                train_data, self.path+'train_data.pt')
+        else:
+            torch.save(
+                train_data, self.path+'train_data_without_norm.pt')
+
+    def gen_test_data(self, num=300000, subtract_norm=True):
+        # Generate test set
+        alphas_test = np.random.rand(num, 3)*0.9
+        md_1st_r_test = []
+        beam = beam_fem()
+        ms_ratio_undam = beam.md1st_ratio()
+        for i in range(num):
+            md_1st_r_test.append(beam.nn_input(
+                alphas_test[i, :], ms_ratio_undam, subtract_norm))
+            if i % (num/10) == 0:
+                print("%.2f" % ((i/num)*100), '%')
+        md_1st_r_test = np.array(md_1st_r_test)
+        test_data = TensorDataset(torch.tensor(
+            md_1st_r_test), torch.tensor(alphas_test))
+        if subtract_norm:
+            torch.save(
+                test_data, self.path+'test_data.pt')
+        else:
+            torch.save(
+                test_data, self.path+'test_data_without_norm.pt')
 
 
 class NeuralNetwork(nn.Module):
@@ -187,6 +238,10 @@ def use_res_train_nn(data_path, use_norm):
 
 # if __name__ == '__main__':
     # data_path = r'./damage identification task/data/neural_nets/'
+    # Generate the training and test data based on finite element model
+    # My_data = Gen_Data(data_path)
+    # My_data.gen_train_data()
+    # My_data.gen_test_data()
     # if you want to try the bayes optimization, uncomment the following line
     # bayes_opt_nn(data_path, num_max_iter=80, use_norm=True)
     # train the nn with the best parameters

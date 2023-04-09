@@ -57,18 +57,18 @@ class rand_vib:
         f1, pxx1 = self.psd_analysis(dim=0)
         f2, pxx2 = self.psd_analysis(dim=1)
         f3, pxx3 = self.psd_analysis(dim=2)
-        ax.plot(f1, np.log10(pxx1), color=col[0], lw=1, label='First sensor')
-        ax.plot(f2, np.log10(pxx2), color=col[1], dashes=[
-                8, 4], lw=1, label='Second sensor')
-        ax.plot(f3, np.log10(pxx3), color=col[2], dashes=[
-                2, 2], lw=1, label='Third sensor')
+        ax.semilogy(f1, pxx1, color=col[0], lw=1, label='First sensor')
+        ax.semilogy(f2, pxx2, color=col[1], dashes=[
+            8, 4], lw=1, label='Second sensor')
+        ax.semilogy(f3, pxx3, color=col[2], dashes=[
+            2, 2], lw=1, label='Third sensor')
         ax.set_xlabel(r'Frequency (Hz)', fontsize=8, labelpad=1)
         ax.set_ylabel(
             r'PSD ($\mathregular{(m/s^2)^2}$/Hz)', fontsize=8, labelpad=1)
         ax.set_xlim([5, 40])
         ax.set_xticks(np.arange(5, 40.1, 5))
-        ax.set_ylim([-7, -1])
-        ax.set_yticks(np.arange(-7, -0.9, 1))
+        ax.set_ylim([1e-7, 1e-1])
+        # ax.set_yticks(np.arange(-7, -0.9, 1))
         ax.tick_params(axis='x', labelsize=8)
         ax.tick_params(axis='y', labelsize=8)
         legend = ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0), borderpad=0.3, borderaxespad=0, handlelength=2.8,
@@ -78,12 +78,12 @@ class rand_vib:
         legend.get_frame().set_alpha(None)
         for obj in legend.legendHandles:
             obj.set_lw(0.75)
-        ax.text(3.3, -7.6, '(b)', fontsize=8)
+        ax.text(3, 10**(-7.6), '(b)', fontsize=8)
         ax.tick_params(axis='x', direction='in')
         ax.tick_params(axis='y', direction='in')
         ax.grid()
 
-        plt.savefig('./damage identification task/figs/F_threesignal.pdf',  format="pdf",
+        plt.savefig('./project3_damage_task_code/figs/F_threesignal.pdf',  format="pdf",
                     dpi=1200, bbox_inches='tight')
 
     def ms_ratio(self, ms):
@@ -134,23 +134,3 @@ class rand_vib:
         beam = beam_fem()
         ms_r_undamaged = beam.md1st_ratio()
         return (ms_r - ms_r_undamaged).reshape(1, -1)
-
-
-# mat = io.loadmat('./damage identification task/data/train_dataset/train_8.mat')
-# mtx = mat['A']
-# vib_analysis = rand_vib(signal_mtx=mtx)
-# fdd analysis
-# ms, _ = vib_analysis.fdd()
-# ms_r = vib_analysis.ms_ratio(ms)
-# print(ms_r)
-# beam = beam_fem()
-# beam_ms = beam.modeshape(1, alphas=[0.2, 0.2, 0.0])[1:-1]
-# beam_ms_r = vib_analysis.ms_ratio(beam_ms)
-# print(beam_ms_r)
-# print(np.array(beam_ms_r)/np.array(ms_r)-1)
-# print(LA.norm(ms_r-np.array(beam_ms_r),ord=2))
-
-# vib_analysis.plot_first_three_signal()
-# plt.show()
-# ms_ratio = oma_svd(signal_mtx,nperseg_num=2000)
-# print(ms_ratio)
