@@ -123,22 +123,31 @@ class rand_vib:
             ms_peak = np.array(ms)[nf_temp_idx, :]
             return ms_peak, nf
         elif type == 'average':
-            ms = np.average(np.array(ms), axis=0)
-        return ms, nf
+            ms_avg = np.average(np.array(ms), axis=0)
+            return ms_avg, nf
+
+    def neur_net_input(self, f_lb=8.5, f_ub=10.5, nperseg_num=40, type='peak'):
+        # implementation of frequency domain decomposition
+        ms, _ = self.fdd(f_lb=f_lb, f_ub=f_ub,
+                         nperseg_num=nperseg_num, type=type)
+        ms_r = self.ms_ratio(ms)
+        beam = beam_fem()
+        ms_r_undamaged = beam.md1st_ratio()
+        return (ms_r - ms_r_undamaged).reshape(1, -1)
 
 
-mat = io.loadmat('./damage identification task/data/train_dataset/train_8.mat')
-mtx = mat['A']
-vib_analysis = rand_vib(signal_mtx=mtx)
+# mat = io.loadmat('./damage identification task/data/train_dataset/train_8.mat')
+# mtx = mat['A']
+# vib_analysis = rand_vib(signal_mtx=mtx)
 # fdd analysis
-ms, _ = vib_analysis.fdd()
-ms_r = vib_analysis.ms_ratio(ms)
-print(ms_r)
-beam = beam_fem()
-beam_ms = beam.modeshape(1, alphas=[0.2, 0.2, 0.0])[1:-1]
-beam_ms_r = vib_analysis.ms_ratio(beam_ms)
-print(beam_ms_r)
-print(np.array(beam_ms_r)/np.array(ms_r)-1)
+# ms, _ = vib_analysis.fdd()
+# ms_r = vib_analysis.ms_ratio(ms)
+# print(ms_r)
+# beam = beam_fem()
+# beam_ms = beam.modeshape(1, alphas=[0.2, 0.2, 0.0])[1:-1]
+# beam_ms_r = vib_analysis.ms_ratio(beam_ms)
+# print(beam_ms_r)
+# print(np.array(beam_ms_r)/np.array(ms_r)-1)
 # print(LA.norm(ms_r-np.array(beam_ms_r),ord=2))
 
 # vib_analysis.plot_first_three_signal()

@@ -185,9 +185,9 @@ def use_res_train_nn(data_path, use_norm):
     nn_model.save_loss(train_loss, test_loss)
 
 
-if __name__ == '__main__':
-    data_path = r'./damage identification task/data/neural_nets/'
+# if __name__ == '__main__':
+    # data_path = r'./damage identification task/data/neural_nets/'
     # if you want to try the bayes optimization, uncomment the following line
     # bayes_opt_nn(data_path, num_max_iter=80, use_norm=True)
     # train the nn with the best parameters
-    use_res_train_nn(data_path, use_norm=True)
+    # use_res_train_nn(data_path, use_norm=True)
