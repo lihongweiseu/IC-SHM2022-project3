@@ -65,7 +65,7 @@ import scipy.io as io
 # ax.yaxis.set_ticks_position('none')
 # ax.tick_params(axis='x', labelsize=8)
 # ax.tick_params(axis='y', labelsize=8)
-# plt.savefig('./damage identification task/figs/F_nrmse_mtx.pdf', dpi=1200, bbox_inches='tight')
+# plt.savefig('./project3_damage_task_code/figs/F_nrmse_mtx.pdf', dpi=1200, bbox_inches='tight')
 # plt.show()
 
 
@@ -114,7 +114,8 @@ ax.tick_params(axis='x', direction='in')
 ax.tick_params(axis='y', direction='in')
 ax.grid()
 ax.set_xlim([0, 200])
-ax.set_ylim([3e-6, 2e-2])
+ax.set_ylim([3e-6, 1e-2])
+plt.savefig('./project3_damage_task_code/figs/F_NN_converge.pdf', dpi=1200, bbox_inches='tight')
 plt.show()
 
 
