@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 from fembeam import beam_fem
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+# device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
 class Gen_Data():
@@ -62,7 +63,7 @@ class Gen_Data():
 
 
 class NeuralNetwork(nn.Module):
-    def __init__(self, in_hid_out):
+    def __init__(self, in_hid_out, act_fun='tanh'):
         # in_hid_out: a list of integers, the number of nodes for each layer
         super().__init__()
         self.flatten = nn.Flatten()
@@ -70,7 +71,12 @@ class NeuralNetwork(nn.Module):
         for i in range(len(in_hid_out)-2):
             self.mlp.append(
                 nn.Linear(in_hid_out[i], in_hid_out[i+1], bias=True))
-            self.mlp.append(nn.Tanh())
+            if act_fun == 'tanh':
+                self.mlp.append(nn.Tanh())
+            elif act_fun == 'relu':
+                self.mlp.append(nn.ReLU())
+            elif act_fun == 'sigmoid':
+                self.mlp.append(nn.Sigmoid())
         self.mlp.append(nn.Linear(in_hid_out[-2], in_hid_out[-1], bias=True))
 
     def forward(self, x):
@@ -81,18 +87,19 @@ class NeuralNetwork(nn.Module):
 
 
 class Train_my_NN():
-    def __init__(self, model, train_data_loader, test_data_loader, loss_fn, optimizer, epochs):
+    def __init__(self, model, train_data_loader, test_data_loader, loss_fn, optimizer, batch_size, epochs):
         self.model = model
         self.train_data_loader = train_data_loader
         self.test_data_loader = test_data_loader
         self.loss_fn = loss_fn
         self.optimizer = optimizer
         self.epochs = epochs
+        self.batch_size = batch_size
 
     def train_one_epoch(self):
-        running_loss = 0.
+        # running_loss = 0.
         avg_cumu_loss = 0.
-        last_loss = 0.
+        # last_loss = 0.
         for i, data in enumerate(self.train_data_loader):
             inputs, labels = data
             inputs = inputs.float()
@@ -102,12 +109,13 @@ class Train_my_NN():
             loss = self.loss_fn(outputs, labels)
             loss.backward()
             self.optimizer.step()
-            running_loss += loss.item()
+            # running_loss += loss.item()
             avg_cumu_loss += loss.item()
-            if i % 100 == 99:
-                last_loss = running_loss / 100  # loss per batch
-                # print('  batch {} loss: {}'.format(i + 1, last_loss))
-                running_loss = 0.
+            # if i % (self.batch_size/10) == (self.batch_size/10-1):
+            #     last_loss = running_loss / \
+            #         (self.batch_size/10)
+            #     print('  batch {} loss: {}'.format(i + 1, last_loss))
+            #     running_loss = 0.
         return avg_cumu_loss/len(self.train_data_loader)
 
     def test_one_epoch(self):
@@ -138,16 +146,18 @@ class Train_my_NN():
 
 
 class Establish_nn():
-    def __init__(self, num_neuron, num_hidden_layer, learning_rate, data_path, use_norm=True):
+    def __init__(self, num_neuron, num_hidden_layer, learning_rate, batch_size, act_fun, data_path, use_norm=True):
         self.num_neuron = num_neuron
         self.num_hidden_layer = num_hidden_layer
         self.learning_rate = learning_rate
+        self.batch_size = batch_size
+        self.act_fun = act_fun
         self.data_path = data_path
         self.nn_structure = [4]+[num_neuron]*num_hidden_layer+[3]
-        self.net = NeuralNetwork(self.nn_structure)
+        self.net = NeuralNetwork(self.nn_structure, act_fun)
         self.use_norm = use_norm
 
-    def train_one_nn(self, epochs=1):
+    def train_one_nn(self, epochs=200):
         if self.use_norm:
             training_set = torch.load(self.data_path + 'train_data.pt')
             test_set = torch.load(self.data_path + 'test_data.pt')
@@ -156,13 +166,14 @@ class Establish_nn():
                 self.data_path + 'train_data_without_norm.pt')
             test_set = torch.load(self.data_path + 'test_data_without_norm.pt')
         training_loader = DataLoader(
-            training_set, batch_size=1000, shuffle=True)
-        test_loader = DataLoader(test_set, batch_size=1000, shuffle=True)
+            training_set, batch_size=self.batch_size, shuffle=True, drop_last=True)
+        test_loader = DataLoader(
+            test_set, batch_size=self.batch_size, shuffle=True)
         loss_function = nn.MSELoss()
         optimizer = torch.optim.SGD(
             self.net.parameters(), lr=self.learning_rate)
         train_my_nn = Train_my_NN(self.net, training_loader, test_loader,
-                                  loss_function, optimizer, epochs)
+                                  loss_function, optimizer, self.batch_size, epochs)
         train_loss, test_loss = train_my_nn.train_nn()
         return train_loss, test_loss
 
@@ -175,7 +186,8 @@ class Establish_nn():
 
 
 class Establish_nn_bayes_opt():
-    def __init__(self, data_path, num_max_iter=50, use_norm=True):
+    def __init__(self, act_fun, data_path, num_max_iter=50, use_norm=True):
+        self.act_fun = act_fun
         self.data_path = data_path
         self.num_max_iter = num_max_iter
         self.use_norm = use_norm
@@ -184,26 +196,28 @@ class Establish_nn_bayes_opt():
         # all the parameters are normalized to [0,1]
         # x: a list of three parameters
         # will return the log10 of the loss after 10 epochs
-        num_neuron, num_hidden_layer, learning_rate = x
+        num_neuron, num_hidden_layer, learning_rate, batch_size = x
         # tran_num_neuron = int(num_neuron*255+1)
         # tran_num_hidden_layer = int(num_hidden_layer*7+1)
         # tran_learning_rate = 10.0**(learning_rate*-5)
         nn_model = Establish_nn(num_neuron, num_hidden_layer,
-                                learning_rate, self.data_path, self.use_norm)
-        _, test_loss = nn_model.train_one_nn(40)
+                                learning_rate, batch_size, self.act_fun, self.data_path, self.use_norm)
+        _, test_loss = nn_model.train_one_nn(200)
         return np.log10(test_loss[-1])
 
     def iter_bayes_opt(self):
-        space = [Integer(10, 385, name='num_neuron', transform='normalize'),
+        space = [Integer(8, 512, name='num_neuron', prior='log-uniform', base=2, transform='normalize'),
                  Integer(1, 8, name='num_hidden_layer', transform='normalize'),
-                 Real(1e-4, 1e-1, name='learning_rate', prior='log-uniform', transform='normalize')]
+                 Real(1e-5, 1e-1, name='learning_rate',
+                      prior='log-uniform', transform='normalize'),
+                 Integer(1e1, 1e5, name='batch_size', prior='log-uniform', transform='normalize', dtype=int)]
         res = gp_minimize(self.obj_fun,  # the function to minimize
                           # the bounds on each dimension of x
                           space,
                           acq_func="EI",  # the acquisition function
                           n_calls=self.num_max_iter,  # the number of evaluations of f
                           n_random_starts=5,  # the number of random initialization points
-                          random_state=1111,  # the random seed
+                          random_state=1,  # the random seed
                           verbose=True)
         return res
 
@@ -215,9 +229,9 @@ class Establish_nn_bayes_opt():
         plt.show()
 
 
-def bayes_opt_nn(data_path, num_max_iter, use_norm):
+def bayes_opt_nn(act_fun, data_path, num_max_iter, use_norm):
     nn_bayes_opt = Establish_nn_bayes_opt(
-        data_path, num_max_iter, use_norm)
+        act_fun, data_path, num_max_iter, use_norm)
     res = nn_bayes_opt.iter_bayes_opt()
     nn_bayes_opt.save_hist(res)
     nn_bayes_opt.plot_cvg(res)
@@ -236,13 +250,13 @@ def use_res_train_nn(data_path, use_norm):
     nn_model.save_loss(train_loss, test_loss)
 
 
-# if __name__ == '__main__':
-    # data_path = r'./damage identification task/data/neural_nets/'
+if __name__ == '__main__':
+    data_path = r'./project3_damage_task_code/data/neural_nets/'
     # Generate the training and test data based on finite element model
     # My_data = Gen_Data(data_path)
     # My_data.gen_train_data()
     # My_data.gen_test_data()
     # if you want to try the bayes optimization, uncomment the following line
-    # bayes_opt_nn(data_path, num_max_iter=80, use_norm=True)
+    bayes_opt_nn('tanh', data_path, num_max_iter=50, use_norm=True)
     # train the nn with the best parameters
     # use_res_train_nn(data_path, use_norm=True)
