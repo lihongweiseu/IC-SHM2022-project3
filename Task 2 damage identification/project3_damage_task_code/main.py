@@ -29,5 +29,5 @@ for i, file_name in enumerate(file_names):
     print(pred.detach().numpy())
     pred_list.append(pred.detach().numpy())
 pred_list = np.array(pred_list).reshape(6, 3)
-np.savetxt(r'./'+'project3_damage_task.txt',
+np.savetxt(r'./Task 2 damage identification/'+'project3_damage_task.txt',
            pred_list, fmt='%f', delimiter=',')
