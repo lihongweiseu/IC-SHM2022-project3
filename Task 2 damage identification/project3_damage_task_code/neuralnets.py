@@ -212,8 +212,8 @@ class Establish_nn_bayes_opt():
 
     def iter_bayes_opt(self):
         space = [Integer(8, 512, name='num_neuron', prior='log-uniform', base=2, transform='normalize'),
-                 Integer(1, 8, name='num_hidden_layer', transform='normalize'),
-                 Real(1e-5, 1e-1, name='learning_rate',
+                 Integer(1, 6, name='num_hidden_layer', transform='normalize'),
+                 Real(1e-3, 1e-1, name='learning_rate',
                       prior='log-uniform', transform='normalize'),
                  Integer(1e1, 1e5, name='batch_size', prior='log-uniform', transform='normalize', dtype=int)]
         res = gp_minimize(self.obj_fun,  # the function to minimize
@@ -263,9 +263,9 @@ if __name__ == '__main__':
     # My_data.gen_test_data()
 
     # if you want to try the bayes optimization, uncomment the following line
-    bayes_opt_nn('tanh', data_path, num_max_iter=15, use_norm=True)
-    bayes_opt_nn('sigmoid', data_path, num_max_iter=15, use_norm=True)
-    bayes_opt_nn('relu', data_path, num_max_iter=15, use_norm=True)
+    # bayes_opt_nn('tanh', data_path, num_max_iter=15, use_norm=True)
+    # bayes_opt_nn('sigmoid', data_path, num_max_iter=15, use_norm=True)
+    # bayes_opt_nn('relu', data_path, num_max_iter=15, use_norm=True)
 
     # train the nn with the best parameters
     # use_res_train_nn(data_path, use_norm=True)
