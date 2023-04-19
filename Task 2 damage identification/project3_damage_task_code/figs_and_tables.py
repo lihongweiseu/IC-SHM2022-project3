@@ -88,35 +88,35 @@ import scipy.io as io
 # plt.show()
 
 ### Figure: Neural networks training convergence curve ###
-from matplotlib import pyplot as plt
-import torch
-neural_net_path = r'./project3_damage_task_code/data/neural_nets/'
-train_loss = np.load(neural_net_path+'train_loss.npy')
-test_loss = np.load(neural_net_path+'test_loss.npy')
-cm = 1 / 2.54
-col = ['k', 'b', 'r']
-fig = plt.figure(figsize=(14 * cm, 10 * cm))
-ax = fig.subplots()
-ax.semilogy(train_loss,
-            color=col[1], dashes=[2, 2], label='train loss')
-ax.semilogy(test_loss,
-            color=col[2], label='test loss')
-legend = ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0), borderpad=0.3, borderaxespad=0,
-                   handlelength=2.8, edgecolor='black', fontsize=8, ncol=3, columnspacing=0.5, handletextpad=0.3)
-legend.get_frame().set_boxstyle('Square', pad=0.0)
-legend.get_frame().set_lw(0.75)
-legend.get_frame().set_alpha(None)
-ax.set_xlabel('Epoch', fontname='Times New Roman', fontsize=8, labelpad=1)
-ax.set_ylabel('Loss', fontname='Times New Roman', fontsize=8, labelpad=1)
-ax.tick_params(axis='x', labelsize=8)
-ax.tick_params(axis='y', labelsize=8)
-ax.tick_params(axis='x', direction='in')
-ax.tick_params(axis='y', direction='in')
-ax.grid()
-ax.set_xlim([0, 200])
-ax.set_ylim([3e-6, 1e-2])
-plt.savefig('./project3_damage_task_code/figs/F_NN_converge.pdf', dpi=1200, bbox_inches='tight')
-plt.show()
+# from matplotlib import pyplot as plt
+# import torch
+# neural_net_path = r'./Task 2 damage identification/project3_damage_task_code/data/neural_nets/'
+# train_loss = np.load(neural_net_path+'train_loss.npy')
+# test_loss = np.load(neural_net_path+'test_loss.npy')
+# cm = 1 / 2.54
+# col = ['k', 'b', 'r']
+# fig = plt.figure(figsize=(14 * cm, 10 * cm))
+# ax = fig.subplots()
+# ax.semilogy(train_loss,
+#             color=col[1], dashes=[2, 2], label='train loss')
+# ax.semilogy(test_loss,
+#             color=col[2], label='test loss')
+# legend = ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0), borderpad=0.3, borderaxespad=0,
+#                    handlelength=2.8, edgecolor='black', fontsize=8, ncol=3, columnspacing=0.5, handletextpad=0.3)
+# legend.get_frame().set_boxstyle('Square', pad=0.0)
+# legend.get_frame().set_lw(0.75)
+# legend.get_frame().set_alpha(None)
+# ax.set_xlabel('Epoch', fontname='Times New Roman', fontsize=8, labelpad=1)
+# ax.set_ylabel('Loss', fontname='Times New Roman', fontsize=8, labelpad=1)
+# ax.tick_params(axis='x', labelsize=8)
+# ax.tick_params(axis='y', labelsize=8)
+# ax.tick_params(axis='x', direction='in')
+# ax.tick_params(axis='y', direction='in')
+# ax.grid()
+# ax.set_xlim([0, 200])
+# ax.set_ylim([3e-6, 1e-2])
+# plt.savefig('./Task 2 damage identification/project3_damage_task_code/figs/F_NN_converge.pdf', dpi=1200, bbox_inches='tight')
+# plt.show()
 
 
 ### Table: Predicted damage factors from train_dataset 1-11 using neural networks###
@@ -156,3 +156,4 @@ plt.show()
 # ground_truth = np.genfromtxt(neural_net_path+'ground_truth.csv', delimiter=',')
 # print(pred_list)
 # print(np.sum(np.abs(pred_list-ground_truth), axis=None)/33)
+

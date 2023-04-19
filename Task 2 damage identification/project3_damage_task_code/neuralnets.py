@@ -156,6 +156,8 @@ class Establish_nn():
         self.nn_structure = [4]+[num_neuron]*num_hidden_layer+[3]
         self.net = NeuralNetwork(self.nn_structure, act_fun)
         self.use_norm = use_norm
+        self.hyp_code = '_{}_{}_{}_{}_{}'.format(self.act_fun, str(self.num_neuron), str(self.num_hidden_layer), str(
+            round(-np.log10(self.learning_rate), 1)), str(round(np.log10(self.batch_size), 1)))
 
     def train_one_nn(self, epochs=200):
         if self.use_norm:
@@ -178,11 +180,14 @@ class Establish_nn():
         return train_loss, test_loss
 
     def save_one_nn(self):
-        torch.save(self.net.state_dict(), self.data_path + 'nn_model.pt')
+        torch.save(self.net.state_dict(), self.data_path +
+                   'nn_model' + self.hyp_code + '.pt')
 
     def save_loss(self, train_loss, test_loss):
-        np.save(self.data_path + 'train_loss.npy', train_loss)
-        np.save(self.data_path + 'test_loss.npy', test_loss)
+        np.save(self.data_path + 'train_loss' +
+                self.hyp_code + '.npy', train_loss)
+        np.save(self.data_path + 'test_loss' +
+                self.hyp_code + '.npy', test_loss)
 
 
 class Establish_nn_bayes_opt():
@@ -202,7 +207,7 @@ class Establish_nn_bayes_opt():
         # tran_learning_rate = 10.0**(learning_rate*-5)
         nn_model = Establish_nn(num_neuron, num_hidden_layer,
                                 learning_rate, batch_size, self.act_fun, self.data_path, self.use_norm)
-        _, test_loss = nn_model.train_one_nn(200)
+        _, test_loss = nn_model.train_one_nn(40)
         return np.log10(test_loss[-1])
 
     def iter_bayes_opt(self):
@@ -222,7 +227,7 @@ class Establish_nn_bayes_opt():
         return res
 
     def save_hist(self, res):
-        dump(res, self.data_path+'hist.pkl')
+        dump(res, self.data_path+'hist_' + self.act_fun + '.pkl')
 
     def plot_cvg(self, res):
         plot_convergence(res)
@@ -245,18 +250,22 @@ def use_res_train_nn(data_path, use_norm):
     # tran_learning_rate = 10.0**(learning_rate*-5)
     nn_model = Establish_nn(num_neuron, num_hidden_layer,
                             learning_rate, data_path, use_norm)
-    train_loss, test_loss = nn_model.train_one_nn(200)
+    train_loss, test_loss = nn_model.train_one_nn(40)
     nn_model.save_one_nn()
     nn_model.save_loss(train_loss, test_loss)
 
 
 if __name__ == '__main__':
-    data_path = r'./project3_damage_task_code/data/neural_nets/'
+    data_path = './Task 2 damage identification/project3_damage_task_code/data/neural_nets/'
     # Generate the training and test data based on finite element model
     # My_data = Gen_Data(data_path)
     # My_data.gen_train_data()
     # My_data.gen_test_data()
+
     # if you want to try the bayes optimization, uncomment the following line
-    bayes_opt_nn('tanh', data_path, num_max_iter=50, use_norm=True)
+    bayes_opt_nn('tanh', data_path, num_max_iter=15, use_norm=True)
+    bayes_opt_nn('sigmoid', data_path, num_max_iter=15, use_norm=True)
+    bayes_opt_nn('relu', data_path, num_max_iter=15, use_norm=True)
+
     # train the nn with the best parameters
     # use_res_train_nn(data_path, use_norm=True)
