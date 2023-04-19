@@ -9,11 +9,12 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 test_data_path = r'./Task 2 damage identification/project3_damage_task_code/data/test_dataset/'
 neural_net_path = r'./Task 2 damage identification/project3_damage_task_code/data/neural_nets/'
-num_neuron = 381
-num_hidden_layer = 4
+num_neuron = 512
+num_hidden_layer = 6
 nn_structure = [4]+[num_neuron]*num_hidden_layer+[3]
 net = NeuralNetwork(nn_structure)
-net.load_state_dict(torch.load(neural_net_path+'nn_model.pt'))
+net.load_state_dict(torch.load(
+    neural_net_path+'nn_model_tanh512_6_1.1_1.0.pt', map_location=torch.device('cpu')))
 file_names = os.listdir(test_data_path)
 print(file_names)
 pred_list = []
