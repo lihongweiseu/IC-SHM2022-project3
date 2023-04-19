@@ -146,9 +146,9 @@ import scipy.io as io
 # fig = plt.figure(figsize=(10 * cm, 10 * cm))
 # ax = fig.subplots()
 # ax.semilogy(x, train_loss,
-#             color=col[1], dashes=[2, 2], label='train loss')
+#             color=col[1], dashes=[2, 2], label='Train loss')
 # ax.semilogy(x, test_loss,
-#             color=col[2], label='test loss')
+#             color=col[2], label='Test loss')
 # legend = ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0), borderpad=0.3, borderaxespad=0,
 #                    handlelength=2.8, edgecolor='black', fontsize=8, ncol=3, columnspacing=0.5, handletextpad=0.3)
 # legend.get_frame().set_boxstyle('Square', pad=0.0)
@@ -170,39 +170,39 @@ import scipy.io as io
 
 ### Table: Predicted damage factors from train_dataset 1-11 using neural networks###
 
-from oma import rand_vib
-from neuralnets import NeuralNetwork, Establish_nn_bayes_opt
-import os
-import torch
-from skopt import load
-os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-train_data_path = r'./Task 2 damage identification/project3_damage_task_code/data/train_dataset/'
-neural_net_path = r'./Task 2 damage identification/project3_damage_task_code/data/neural_nets/'
-res = load(neural_net_path+'hist.pkl')
-num_neuron, num_hidden_layer, learning_rate = res.x
-print(num_neuron, num_hidden_layer, learning_rate)
-# Neural network structure
-num_neuron = 512
-num_hidden_layer = 6
-nn_structure = [4]+[num_neuron]*num_hidden_layer+[3]
-net = NeuralNetwork(nn_structure, act_fun='tanh')
-net.load_state_dict(torch.load(
-    neural_net_path+'nn_model_tanh512_6_1.1_1.0.pt', map_location=torch.device('cpu')))
-# File names
-file_names = os.listdir(train_data_path)
-file_names.sort(key=lambda x: int(x[6:-4]))
-pred_list = []
-for i, file_name in enumerate(file_names):
-    file_path = train_data_path + file_name
-    mat = io.loadmat(file_path)
-    mtx = mat['A']
-    vib_analysis = rand_vib(signal_mtx=mtx)
-    ipt = vib_analysis.neur_net_input()
-    pred = net.forward(torch.tensor(ipt).float())
-    pred = torch.relu(pred)
-    print(pred.detach().numpy())
-    pred_list.append(pred.detach().numpy())
-pred_list = np.array(pred_list).reshape(11, 3)
-ground_truth = np.genfromtxt(neural_net_path+'ground_truth.csv', delimiter=',')
-print(pred_list)
-print(np.sum(np.abs(pred_list-ground_truth), axis=None)/33)
+# from oma import rand_vib
+# from neuralnets import NeuralNetwork, Establish_nn_bayes_opt
+# import os
+# import torch
+# from skopt import load
+# os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+# train_data_path = r'./Task 2 damage identification/project3_damage_task_code/data/train_dataset/'
+# neural_net_path = r'./Task 2 damage identification/project3_damage_task_code/data/neural_nets/'
+# res = load(neural_net_path+'hist.pkl')
+# num_neuron, num_hidden_layer, learning_rate = res.x
+# print(num_neuron, num_hidden_layer, learning_rate)
+# # Neural network structure
+# num_neuron = 512
+# num_hidden_layer = 6
+# nn_structure = [4]+[num_neuron]*num_hidden_layer+[3]
+# net = NeuralNetwork(nn_structure, act_fun='tanh')
+# net.load_state_dict(torch.load(
+#     neural_net_path+'nn_model_tanh512_6_1.1_1.0.pt', map_location=torch.device('cpu')))
+# # File names
+# file_names = os.listdir(train_data_path)
+# file_names.sort(key=lambda x: int(x[6:-4]))
+# pred_list = []
+# for i, file_name in enumerate(file_names):
+#     file_path = train_data_path + file_name
+#     mat = io.loadmat(file_path)
+#     mtx = mat['A']
+#     vib_analysis = rand_vib(signal_mtx=mtx)
+#     ipt = vib_analysis.neur_net_input()
+#     pred = net.forward(torch.tensor(ipt).float())
+#     pred = torch.relu(pred)
+#     print(pred.detach().numpy())
+#     pred_list.append(pred.detach().numpy())
+# pred_list = np.array(pred_list).reshape(11, 3)
+# ground_truth = np.genfromtxt(neural_net_path+'ground_truth.csv', delimiter=',')
+# print(pred_list)
+# print(np.sum(np.abs(pred_list-ground_truth), axis=None)/33)
