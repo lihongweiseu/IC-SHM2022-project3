@@ -93,7 +93,7 @@ class beam_fem:
 
     def modeshape(self, order, alphas=[0.0, 0.0, 0.0], dof_idx=[5, 30, 42, 54, 79], type='acc'):
         # return i-th mode shape value at the locations of two ends and five accelerometers
-        # or return a 85*1 vector that represents the modeshape of al dof
+        # or return a 86*1 vector that represents the modeshape of al dof
         if hasattr(self, 'K'):
             K = self.K
         else:

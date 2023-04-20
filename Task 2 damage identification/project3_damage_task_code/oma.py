@@ -126,7 +126,7 @@ class rand_vib:
             ms_avg = np.average(np.array(ms), axis=0)
             return ms_avg, nf
 
-    def neur_net_input(self, f_lb=8.5, f_ub=10.5, nperseg_num=40, type='peak'):
+    def neur_net_input(self, f_lb=8.5, f_ub=10.5, nperseg_num=30, type='peak'):
         # implementation of frequency domain decomposition
         ms, _ = self.fdd(f_lb=f_lb, f_ub=f_ub,
                          nperseg_num=nperseg_num, type=type)
