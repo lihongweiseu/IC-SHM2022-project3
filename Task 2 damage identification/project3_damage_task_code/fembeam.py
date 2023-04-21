@@ -44,7 +44,7 @@ class beam_fem:
 
     def assemble_glb_mtx(self, type='stiff', alpha1=0.0, alpha2=0.0, alpha3=0.0):
         # global mass and stiffness matrices
-        # there are 44 elements, 45 nodes, 85 dofs in total
+        # there are 44 elements, 45 nodes, 86 dofs in total
         ele_num = np.linspace(0, 43, 44, dtype=int).reshape((-1, 1))
         dof_num = np.linspace(0, 89, 90, dtype=int).reshape((-1, 1))
         ele_node = np.hstack(
