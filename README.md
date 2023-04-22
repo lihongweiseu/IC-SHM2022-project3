@@ -5,15 +5,19 @@ The repository contains the code and documentation for our team's entry in the 3
 - Data-driven modeling
 - Damage identification
 
-The general descriptions of these 2 tasks and how we solve them are illustrated as follows.
-
 ## Getting Started
 
 To get started with our solution, you can follow these steps:
 
 - Clone this repository to your local machine
-- Install any dependencies using pip
-- Set the workspace to be the folder IC-SHM2022-project3
+- Check if the installed version of the packages meets the requirement
+- Set the folder IC-SHM2022-project3 as the workspace
+
+### Requirements
+
+- Python >= 3.8
+- Pytorch >= 1.12.1
+- SciPy >= 1.10.1
 
 ## Task 1: Data-driven Modeling
 
