@@ -10,8 +10,10 @@ The repository contains the code and documentation for our team's entry in the 3
 To get started with our solution, you can follow these steps:
 
 - Clone this repository to your local machine
-- Check if the installed version of the packages meets the requirement
+- Check if the installed version of the packages meets the requirements
 - Set the folder IC-SHM2022-project3 as the workspace
+- Run XXX in the folder of Task 1 data-driven modeling
+- Run main.py in the folder of Task 2 damage identification
 
 ### Requirements
 
@@ -23,7 +25,7 @@ To get started with our solution, you can follow these steps:
 
 ## Task 2: Damage Identification
 
-The main goal of the task is to implement damage identification of three specified units in a three-span continuous bridge (other units stay undamaged) through the use of random vibration data from five channels. There are six cases in the testing datasets, and the developed algorithm results in a $6\times3$ matrix.
+In this task, we aim to implement damage identification of three specified units in a three-span continuous bridge (other units stay undamaged) through the use of random vibration data from five channels. There are six cases in the testing datasets, and the developed algorithm results in a $6\times3$ matrix.
 
 ### Usage
 
