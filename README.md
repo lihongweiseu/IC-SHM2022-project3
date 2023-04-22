@@ -25,13 +25,24 @@ To get started with our solution, you can follow these steps:
 
 ## Task 2: Damage Identification
 
-In this task, we aim to implement damage identification of three specified units in a three-span continuous bridge (other units stay undamaged) through the use of random vibration data from five channels. There are six cases in the testing datasets, and the developed algorithm results in a $6\times3$ matrix.
+In this task, we aim to implement damage identification of three specified units (7, 22, 38) in a three-span continuous bridge (other units stay undamaged) through the use of random vibration data from five channels. There are six cases in the testing datasets, and the developed algorithm results in a $6\times3$ matrix.
 
-<p align="center">
-  <iframe src="./Task 2 damage identification/project3_damage_task_code/figs/F_inverseproblem.pdf" width=400 />
-</p>
+### Methodology
 
-### Usage
+### Results
+
+### Folder Structure
+
+1. **project3_damage_task**: elastic modulus reduction rate of three units for each test data set.
+2. **project3_damage_task_code**: Python source codes, data, and figures to demonstrate and reproduce the results. The data and figures are organized in individual folders, and the source codes are presented directly in the current folder.
+
+   - **data**:
+   - **figs**:
+   - **fembeam**:
+   - **neuralnets**:
+   - **oma**:
+   - **figs_and_tables**
+   - **main**:
 
 ## License
 
