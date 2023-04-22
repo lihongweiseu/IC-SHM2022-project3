@@ -68,7 +68,7 @@ Given the test dataset, our deep neural network could accurately predict the ela
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENCE) file for details.
+This project is licensed under the MIT License - see the [LICENCE](./LICENCE) file for details.
 
 ## Acknowledgments
 
