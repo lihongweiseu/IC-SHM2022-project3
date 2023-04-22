@@ -85,9 +85,9 @@ class rand_vib:
         ax.tick_params(axis='y', direction='in')
         ax.tick_params(axis='y', which='minor', direction='in')
         ax.grid()
-
+        fig.tight_layout(pad=0.1)
         plt.savefig(r'./Task 2 damage identification/project3_damage_task_code/figs/F_threesignal.pdf',  format="pdf",
-                    dpi=1200, bbox_inches='tight')
+                    dpi=1200)
 
     def ms_ratio(self, ms):
         ms_r = []
