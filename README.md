@@ -33,16 +33,16 @@ In this task, we aim to implement damage identification of three specified units
 
 ### Folder Structure
 
-1. **project3_damage_task**: elastic modulus reduction rate of three units for each test data set.
-2. **project3_damage_task_code**: Python source codes, data, and figures to demonstrate and reproduce the results. The data and figures are organized in individual folders, and the source codes are presented directly in the current folder.
+1. **project3_damage_task.txt**: The elastic modulus reduction rates of three units for 6 test data sets.
+2. **project3_damage_task_code**: Python source codes, data, and figures to demonstrate and reproduce the results. The data and figures are organized in individual folders, and the source codes are presented directly in this folder.
 
-   - **data**:
-   - **figs**:
-   - **fembeam**:
-   - **neuralnets**:
-   - **oma**:
-   - **figs_and_tables**
-   - **main**:
+   - **fembeam.py**: A class that constructs the finite element model for the three-span continuous bridge.
+   - **neuralnets.py**: Several classes including training data set generation, neural network definition and training, as well as the Bayesian optimization for hyper-parameters tuning.
+   - **oma.py**: A class for operational modal analysis using frequency domain decomposition.
+   - **figs_and_tables.py**: Numerous methods to implement the figures and tables utilized in the report.
+   - **main.py**: Routines to implement the reduction of elastic modulus reduction rates.
+   - **data**: Training and test dataset provided in IC-SHM2022, training histories for neural networks and Bayesian optimization.
+   - **figs**: Figures for random vibration, normalized root mean square error matrix, Bayesian optimization and neural network convergence plots.
 
 ## License
 
