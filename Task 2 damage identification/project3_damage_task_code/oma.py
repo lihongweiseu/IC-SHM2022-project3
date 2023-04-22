@@ -33,7 +33,7 @@ class rand_vib:
         ax.plot(T, self.signal_mtx[2, 0:num], color=col[2], dashes=[
                 2, 2], label='Third sensor', zorder=1)
         for line in ax.get_lines():
-            line.set_linewidth(0.3)
+            line.set_linewidth(0.5)
         ax.set_xlabel(r'Time (s)', fontsize=8, labelpad=1)
         ax.set_ylabel(
             r'Acceleration ($\mathregular{m/s^2}$)', fontsize=8, labelpad=1)
