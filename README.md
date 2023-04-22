@@ -30,11 +30,13 @@ dataset provided by the IC-SHM 2022 Committee for this task is completely unused
 
 ### Methodology
 
-The proposed method successfully proved that the mode shapes of the three-span continuous beam as variables are independent of finite element model parameters, and only the reduction rates of elastic modulus (aka, the damage factors) could influence the mode shape. Furthermore, a forward mapping expressed in closed form could be constructed to map the damage factors to the mode shapes. In this competition,
+The proposed method demonstrates that the mode shapes of a three-span continuous beam are independent of finite element model parameters and are only affected by the reduction rates of the elastic modulus (i.e., the damage factors). Moreover, we were able to construct a closed-form forward mapping that relates the damage factors to the mode shapes. By using this mapping, we generated a large number of label pairs whose feature and target domain are exchanged, which allowed us to train a deep neural network with mode shape ratios as input and damage factors as output. We used Bayesian optimization to automatically tune the hyper-parameters of the network for more accurate predictions. In this competition, we were provided with random vibration signals from five accelerometers. We used the frequency domain decomposition method to extract the mode shape of the beam, which was then fed into the neural network to compute the damage factors.
 
 ### Results
 
 Given the test dataset, our deep neural network could accurately predict the elastic modulus reduction rates. The results that retain 6 decimal places are shown in the following table.
+
+<div align="center">
 
 | File name | Damage condition <br/> (Unit No.7) | Damage condition <br/>(Unit No.22) | Damage condition <br/>(Unit No.38) |
 | :-------: | :--------------------------------: | :--------------------------------: | :--------------------------------: |
@@ -44,6 +46,8 @@ Given the test dataset, our deep neural network could accurately predict the ela
 |  test_4   |              0.413827              |              0.000000              |              0.018817              |
 |  test_5   |              0.192929              |              0.200971              |              0.189067              |
 |  test_6   |              0.397418              |              0.400919              |              0.403472              |
+
+</div>
 
 ### Folder Structure
 
