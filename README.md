@@ -30,7 +30,11 @@ dataset provided by the IC-SHM 2022 Committee for this task is completely unused
 
 ### Methodology
 
-The proposed method demonstrates that the mode shapes of a three-span continuous beam are independent of finite element model parameters and are only affected by the reduction rates of the elastic modulus (i.e., the damage factors). Moreover, we were able to construct a closed-form forward mapping that relates the damage factors to the mode shapes. By using this mapping, we generated a large number of label pairs whose feature and target domain are exchanged, which allowed us to train a deep neural network with mode shape ratios as input and damage factors as output. We used Bayesian optimization to automatically tune the hyper-parameters of the network for more accurate predictions. In this competition, we were provided with random vibration signals from five accelerometers. We used the frequency domain decomposition method to extract the mode shape of the beam, which was then fed into the neural network to compute the damage factors.
+The proposed method demonstrates that the mode shapes of a three-span continuous beam are independent of finite element model parameters and are only affected by the reduction rates of the elastic modulus (i.e., the damage factors). Moreover, we were able to construct a closed-form forward mapping that relates the damage factors to the mode shapes. By using this mapping, we generated a large number of label pairs whose feature and target domain are exchanged, which allowed us to train a deep neural network with mode shape ratios as input and damage factors as output. We used Bayesian optimization to automatically tune the hyper-parameters of the network for more accurate predictions. In this competition, we were provided with random vibration signals from five accelerometers. The frequency domain decomposition method was adopted to extract the mode shape of the beam, which was then fed into the neural network to compute the damage factors. An overview of the proposed method is shown as follows.
+
+<div align="center">
+	<img align="center" src="./Task 2 damage identification/project3_damage_task_code/figs/F_overview.png" width=500/>
+</div>
 
 ### Results
 
