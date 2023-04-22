@@ -30,18 +30,20 @@ dataset provided by the IC-SHM 2022 Committee for this task is completely unused
 
 ### Methodology
 
+The proposed method successfully proved that the mode shapes of the three-span continuous beam as variables are independent of finite element model parameters, and only the reduction rates of elastic modulus (aka, the damage factors) could influence the mode shape. Furthermore, a forward mapping expressed in closed form could be constructed to map the damage factors to the mode shapes. In this competition,
+
 ### Results
 
 Given the test dataset, our deep neural network could accurately predict the elastic modulus reduction rates. The results that retain 6 decimal places are shown in the following table.
 
-| File name | Damage condition (Unit No.7) | Damage condition (Unit No.22) | Damage condition (Unit No.38) |
-| :-------: | :--------------------------: | :---------------------------: | :---------------------------: |
-|  test_1   |           0.002931           |           0.097144            |           0.005024            |
-|  test_2   |           0.000000           |           0.499517            |           0.004262            |
-|  test_3   |           0.221431           |           0.000000            |           0.003660            |
-|  test_4   |           0.413827           |           0.000000            |           0.018817            |
-|  test_5   |           0.192929           |           0.200971            |           0.189067            |
-|  test_6   |           0.397418           |           0.400919            |           0.403472            |
+| File name | Damage condition <br/> (Unit No.7) | Damage condition <br/>(Unit No.22) | Damage condition <br/>(Unit No.38) |
+| :-------: | :--------------------------------: | :--------------------------------: | :--------------------------------: |
+|  test_1   |              0.002931              |              0.097144              |              0.005024              |
+|  test_2   |              0.000000              |              0.499517              |              0.004262              |
+|  test_3   |              0.221431              |              0.000000              |              0.003660              |
+|  test_4   |              0.413827              |              0.000000              |              0.018817              |
+|  test_5   |              0.192929              |              0.200971              |              0.189067              |
+|  test_6   |              0.397418              |              0.400919              |              0.403472              |
 
 ### Folder Structure
 
@@ -62,4 +64,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-Haha~
+Thank XXX
