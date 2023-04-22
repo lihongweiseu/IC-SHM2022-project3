@@ -20,7 +20,7 @@ class rand_vib:
         return f, pxx
 
     def plot_first_three_signal(self):
-        num = 3000
+        num = 2000
         T = np.linspace(0, (num-1)/100, num)
         col = ['k', 'b', 'r']
         cm = 1 / 2.54
@@ -32,13 +32,15 @@ class rand_vib:
                 8, 4], label='Second sensor')
         ax.plot(T, self.signal_mtx[2, 0:num], color=col[2], dashes=[
                 2, 2], label='Third sensor', zorder=1)
+        for line in ax.get_lines():
+            line.set_linewidth(0.3)
         ax.set_xlabel(r'Time (s)', fontsize=8, labelpad=1)
         ax.set_ylabel(
             r'Acceleration ($\mathregular{m/s^2}$)', fontsize=8, labelpad=1)
         ax.set_ylim([-0.3, 0.3])
         ax.set_yticks(np.arange(-0.3, 0.31, 0.1))
-        ax.set_xlim([0, 30])
-        ax.set_xticks(np.arange(0, 30.1, 5))
+        ax.set_xlim([0, 20])
+        ax.set_xticks(np.arange(0, 20.1, 5))
         ax.tick_params(axis='x', labelsize=8)
         ax.tick_params(axis='y', labelsize=8)
         legend = ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0), borderpad=0.3, borderaxespad=0,
@@ -48,7 +50,7 @@ class rand_vib:
         legend.get_frame().set_alpha(None)
         for obj in legend.legendHandles:
             obj.set_lw(0.75)
-        ax.text(-1.8, -0.37, '(a)', fontsize=8)
+        ax.text(-1.2, -0.37, '(a)', fontsize=8)
         ax.tick_params(axis='x', direction='in')
         ax.tick_params(axis='y', direction='in')
         ax.grid()
@@ -81,9 +83,10 @@ class rand_vib:
         ax.text(3, 10**(-7.6), '(b)', fontsize=8)
         ax.tick_params(axis='x', direction='in')
         ax.tick_params(axis='y', direction='in')
+        ax.tick_params(axis='y', which='minor', direction='in')
         ax.grid()
 
-        plt.savefig('./Task 2 damage identification/project3_damage_task_code/figs/F_threesignal.pdf',  format="pdf",
+        plt.savefig(r'./Task 2 damage identification/project3_damage_task_code/figs/F_threesignal.pdf',  format="pdf",
                     dpi=1200, bbox_inches='tight')
 
     def ms_ratio(self, ms):
