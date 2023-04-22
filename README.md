@@ -25,11 +25,23 @@ To get started with our solution, you can follow these steps:
 
 ## Task 2: Damage Identification
 
-In this task, we aim to implement damage identification of three specified units (7, 22, 38) in a three-span continuous bridge (other units stay undamaged) through the use of random vibration data from five channels. There are six cases in the testing datasets, and the developed algorithm results in a $6\times3$ matrix.
+In this task, we aim to implement damage identification of three specified units (7, 22, 38) in a three-span continuous bridge (other units stay undamaged) through the use of random vibration data from five channels. There are six cases in the testing datasets, and the developed algorithm results in a $6\times3$ matrix. It is remarked that **the training
+dataset provided by the IC-SHM 2022 Committee for this task is completely unused**.
 
 ### Methodology
 
 ### Results
+
+Given the test dataset, our deep neural network could accurately predict the elastic modulus reduction rates. The results that retain 6 decimal places are shown in the following table.
+
+| File name | Damage condition (Unit No.7) | Damage condition (Unit No.22) | Damage condition (Unit No.38) |
+| :-------: | :--------------------------: | :---------------------------: | :---------------------------: |
+|  test_1   |           0.002931           |           0.097144            |           0.005024            |
+|  test_2   |           0.000000           |           0.499517            |           0.004262            |
+|  test_3   |           0.221431           |           0.000000            |           0.003660            |
+|  test_4   |           0.413827           |           0.000000            |           0.018817            |
+|  test_5   |           0.192929           |           0.200971            |           0.189067            |
+|  test_6   |           0.397418           |           0.400919            |           0.403472            |
 
 ### Folder Structure
 
@@ -41,7 +53,7 @@ In this task, we aim to implement damage identification of three specified units
    - **oma.py**: A class for operational modal analysis using frequency domain decomposition.
    - **figs_and_tables.py**: Numerous methods to implement the figures and tables utilized in the report.
    - **main.py**: Routines to implement the reduction of elastic modulus reduction rates.
-   - **data**: Training and test dataset provided in IC-SHM2022, training histories for neural networks and Bayesian optimization.
+   - **data**: Training and test dataset provided in IC-SHM 2022 Committee, training histories for neural networks and Bayesian optimization.
    - **figs**: Figures for random vibration, normalized root mean square error matrix, Bayesian optimization and neural network convergence plots.
 
 ## License
@@ -49,3 +61,5 @@ In this task, we aim to implement damage identification of three specified units
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
+
+Haha~
