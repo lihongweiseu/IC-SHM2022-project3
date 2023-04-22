@@ -17,15 +17,19 @@ To get started with our solution, you can follow these steps:
 
 ### Requirements
 
-- Python >= 3.8
+- Python >= 3.8.0
 - Pytorch >= 1.12.1
-- SciPy >= 1.10.1
+- SciPy >= 1.9.3
 
 ## Task 1: Data-driven Modeling
 
 ## Task 2: Damage Identification
 
 In this task, we aim to implement damage identification of three specified units in a three-span continuous bridge (other units stay undamaged) through the use of random vibration data from five channels. There are six cases in the testing datasets, and the developed algorithm results in a $6\times3$ matrix.
+
+<p align="center">
+  <iframe src="./Task 2 damage identification/project3_damage_task_code/figs/F_inverseproblem.pdf" width=400 />
+</p>
 
 ### Usage
 
