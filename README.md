@@ -62,7 +62,7 @@ Given the test dataset, our deep neural network could accurately predict the ela
    - **neuralnets.py**: Several classes including training data set generation, neural network definition and training, as well as the Bayesian optimization for hyper-parameters tuning.
    - **oma.py**: A class for operational modal analysis using frequency domain decomposition.
    - **figs_and_tables.py**: Numerous methods to implement the figures and tables utilized in the report.
-   - **main.py**: Routines to implement the reduction of elastic modulus reduction rates.
+   - **main.py**: Routines to predict the reduction of elastic modulus reduction rates.
    - **data**: Training and test dataset provided in IC-SHM 2022 Committee, training histories for neural networks and Bayesian optimization.
    - **figs**: Figures for random vibration, normalized root mean square error matrix, Bayesian optimization and neural network convergence plots.
 
