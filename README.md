@@ -12,8 +12,8 @@ To get started with our solution, you can follow these steps:
 - Clone this repository to your local machine
 - Check if the installed version of the packages meets the requirements
 - Set the folder IC-SHM2022-project3 as the workspace
-- Run XXX in the folder of Task 1 data-driven modeling
-- Run main.py in the folder of Task 2 damage identification
+- For task 1
+- Run main.py in the folder of Task 2 damage identification, and check the results of elastic modulus reduction in project3_damage_task.txt in the same folder
 
 ### Requirements
 
