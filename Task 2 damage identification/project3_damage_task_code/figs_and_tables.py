@@ -77,12 +77,79 @@ import scipy.io as io
 
 
 ### Figure: an instance of time-domain random vibration signals and the corresponding frequency domain representations ###
-mat = io.loadmat(
-    r'./Task 2 damage identification/project3_damage_task_code/data/train_dataset/train_8.mat')
-mtx = mat['A']
-vib_analysis = rand_vib(signal_mtx=mtx)
-vib_analysis.plot_first_three_signal()
-plt.show()
+# mat = io.loadmat(
+#     r'./Task 2 damage identification/project3_damage_task_code/data/train_dataset/train_8.mat')
+# mtx = mat['A']
+# vib_analysis = rand_vib(signal_mtx=mtx)
+# num = 2000
+# T = np.linspace(0, (num-1)/100, num)
+# col = ['k', 'b', 'r']
+# cm = 1 / 2.54
+# fig = plt.figure(figsize=(16 * cm, 14 * cm))
+# ax = fig.add_subplot(211)
+# ax.plot(T, vib_analysis.signal_mtx[0, 0:num],
+#         color=col[0], label='First sensor')
+# ax.plot(T, vib_analysis.signal_mtx[1, 0:num], color=col[1], dashes=[
+#         8, 4], label='Second sensor')
+# ax.plot(T, vib_analysis.signal_mtx[2, 0:num], color=col[2], dashes=[
+#         2, 2], label='Third sensor', zorder=1)
+# for line in ax.get_lines():
+#     line.set_linewidth(0.5)
+# ax.set_xlabel(r'Time (s)', fontsize=8, labelpad=1)
+# ax.set_ylabel(
+#     r'Acceleration ($\mathregular{m/s^2}$)', fontsize=8, labelpad=1)
+# ax.set_ylim([-0.3, 0.3])
+# ax.set_yticks(np.arange(-0.3, 0.31, 0.1))
+# ax.set_xlim([0, 20])
+# ax.set_xticks(np.arange(0, 20.1, 5))
+# ax.tick_params(axis='x', labelsize=8)
+# ax.tick_params(axis='y', labelsize=8)
+# legend = ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0), borderpad=0.3, borderaxespad=0,
+#                    handlelength=2.8, edgecolor='black', fontsize=8, ncol=3, columnspacing=0.5, handletextpad=0.3)
+# legend.get_frame().set_boxstyle('Square', pad=0.0)
+# legend.get_frame().set_lw(0.75)
+# legend.get_frame().set_alpha(None)
+# for obj in legend.legendHandles:
+#     obj.set_lw(0.75)
+# ax.text(-1.2, -0.37, '(a)', fontsize=8)
+# ax.tick_params(axis='x', direction='in')
+# ax.tick_params(axis='y', direction='in')
+# ax.grid()
+
+# ax = fig.add_subplot(212)
+# f1, pxx1 = vib_analysis.psd_analysis(dim=0)
+# f2, pxx2 = vib_analysis.psd_analysis(dim=1)
+# f3, pxx3 = vib_analysis.psd_analysis(dim=2)
+# ax.semilogy(f1, pxx1, color=col[0], lw=1, label='First sensor')
+# ax.semilogy(f2, pxx2, color=col[1], dashes=[
+#     8, 4], lw=1, label='Second sensor')
+# ax.semilogy(f3, pxx3, color=col[2], dashes=[
+#     2, 2], lw=1, label='Third sensor')
+# ax.set_xlabel(r'Frequency (Hz)', fontsize=8, labelpad=1)
+# ax.set_ylabel(
+#     r'PSD ($\mathregular{(m/s^2)^2}$/Hz)', fontsize=8, labelpad=1)
+# ax.set_xlim([5, 40])
+# ax.set_xticks(np.arange(5, 40.1, 5))
+# ax.set_ylim([1e-7, 1e-1])
+# # ax.set_yticks(np.arange(-7, -0.9, 1))
+# ax.tick_params(axis='x', labelsize=8)
+# ax.tick_params(axis='y', labelsize=8)
+# legend = ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0), borderpad=0.3, borderaxespad=0, handlelength=2.8,
+#                    edgecolor='black', fontsize=8, ncol=3, columnspacing=0.5, handletextpad=0.3)  # labelspacing=0
+# legend.get_frame().set_boxstyle('Square', pad=0.0)
+# legend.get_frame().set_lw(0.75)
+# legend.get_frame().set_alpha(None)
+# for obj in legend.legendHandles:
+#     obj.set_lw(0.75)
+# ax.text(3, 10**(-7.6), '(b)', fontsize=8)
+# ax.tick_params(axis='x', direction='in')
+# ax.tick_params(axis='y', direction='in')
+# ax.tick_params(axis='y', which='minor', direction='in')
+# ax.grid()
+# fig.tight_layout(pad=0.1)
+# plt.savefig(r'./Task 2 damage identification/project3_damage_task_code/figs/F_threesignal.pdf',  format="pdf",
+#             dpi=1200)
+# plt.show()
 
 
 ### Figure: Bayesian Optimization convergence curve ###
@@ -108,7 +175,7 @@ plt.show()
 
 # col = ['k', 'b', 'r']
 # cm = 1 / 2.54
-# fig = plt.figure(figsize=(10 * cm, 10 * cm))
+# fig = plt.figure(figsize=(10 * cm, 7 * cm))
 # ax = fig.subplots()
 # x = np.arange(15)+1
 # ax.semilogy(x, 10**np.array(relu_vec), color=col[0], label='ReLU', marker='o')
