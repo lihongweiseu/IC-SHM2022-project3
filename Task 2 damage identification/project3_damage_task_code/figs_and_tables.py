@@ -205,8 +205,10 @@ import scipy.io as io
 # for obj in legend.legendHandles:
 #     obj.set_lw(0.75)
 # ax.grid()
+# ax.tick_params(axis='y', which='minor', direction='in')
+# fig.tight_layout(pad=0.1)
 # plt.savefig('./Task 2 damage identification/project3_damage_task_code/figs/F_bayesopt.pdf',
-#             dpi=1200, bbox_inches='tight')
+#             dpi=1200)
 # plt.show()
 
 ### Figure: Neural networks training convergence curve ###
