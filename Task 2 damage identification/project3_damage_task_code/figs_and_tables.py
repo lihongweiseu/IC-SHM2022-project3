@@ -92,11 +92,11 @@ import scipy.io as io
 # fig = plt.figure(figsize=(16 * cm, 14 * cm))
 # ax = fig.add_subplot(211)
 # ax.plot(T, vib_analysis.signal_mtx[0, 0:num],
-#         color=col[0], label='First sensor')
+#         color=col[0], label='A1')
 # ax.plot(T, vib_analysis.signal_mtx[1, 0:num], color=col[1], dashes=[
-#         8, 4], label='Second sensor')
+#         8, 4], label='A2')
 # ax.plot(T, vib_analysis.signal_mtx[2, 0:num], color=col[2], dashes=[
-#         2, 2], label='Third sensor', zorder=1)
+#         2, 2], label='A3', zorder=1)
 # for line in ax.get_lines():
 #     line.set_linewidth(0.5)
 # ax.set_xlabel(r'Time (s)', fontsize=8, labelpad=1)
@@ -124,11 +124,11 @@ import scipy.io as io
 # f1, pxx1 = vib_analysis.psd_analysis(dim=0)
 # f2, pxx2 = vib_analysis.psd_analysis(dim=1)
 # f3, pxx3 = vib_analysis.psd_analysis(dim=2)
-# ax.semilogy(f1, pxx1, color=col[0], lw=1, label='First sensor')
+# ax.semilogy(f1, pxx1, color=col[0], lw=1, label='A1')
 # ax.semilogy(f2, pxx2, color=col[1], dashes=[
-#     8, 4], lw=1, label='Second sensor')
+#     8, 4], lw=1, label='A2')
 # ax.semilogy(f3, pxx3, color=col[2], dashes=[
-#     2, 2], lw=1, label='Third sensor')
+#     2, 2], lw=1, label='A3')
 # ax.set_xlabel(r'Frequency (Hz)', fontsize=8, labelpad=1)
 # ax.set_ylabel(
 #     r'PSD ($\mathregular{(m/s^2)^2}$/Hz)', fontsize=8, labelpad=1)
