@@ -9,35 +9,30 @@ from scipy.io import savemat, loadmat
 
 
 # Prepare data
-def data(task, input_type):
+def data(root, input_type):
+    global fi
     if input_type == 'clean':
-        fi = np.transpose(loadmat('./a/data_clean.mat')['data'])  # clean data
+        fi = np.transpose(loadmat(root + '\\Task 1 data-driven modeling\\project3_a_task_code\\a\\data_clean.mat')
+                          ['data'])  # clean input data
 
     if input_type == 'noise':
-        fi = np.transpose(loadmat('./a/data_noised.mat')['data_noised'])  # noised data
+        fi = np.transpose(loadmat(root + '\\Task 1 data-driven modeling\\project3_a_task_code\\a\\data_noised.mat')
+                          ['data_noised'])  # noised input data
 
-    fo = np.transpose(loadmat('./a/data_clean.mat')['data'])  # output data
+    fo = np.transpose(loadmat(root + '\\Task 1 data-driven modeling\\project3_a_task_code\\a\\data_clean.mat')
+                      ['data'])  # output data
 
-    if task == 'A':
-        u = np.hstack((fi[:, 0:1], fi[:, 1:2], fi[:, 2:3], fi[:, 3:4]))  # input for task A
-        y_ref = fo[:, 4:5]  # output for task A
-        u_torch, y_ref_torch = torch.tensor(u), torch.tensor(y_ref)  # convert to tensor data
-
-    if task == 'B':
-        u = np.hstack((fi[:, 0:1], fi[:, 1:2]))  # input for task B
-        y_ref = np.hstack((fo[:, 2:3], fo[:, 3:4], fo[:, 4:5]))  # output for task B
-        u_torch, y_ref_torch = torch.tensor(u), torch.tensor(y_ref)  # convert to tensor data
+    u = np.hstack((fi[:, 0:1], fi[:, 1:2], fi[:, 2:3], fi[:, 3:4]))  # input for task A
+    y_ref = fo[:, 4:5]  # output for task A
+    u_torch, y_ref_torch = torch.tensor(u), torch.tensor(y_ref)  # convert to tensor data
 
     return u, u_torch, y_ref, y_ref_torch
 
 
 # Prepare models
-def models(model_name, task, hidden_size, num_layers):
+def models(model_name, hidden_size, num_layers):
     global model
-    if task == 'A':
-        input_size, output_size = 4, 1
-    if task == 'B':
-        input_size, output_size = 2, 3
+    input_size, output_size = 4, 1
 
     # Define BiLSTM
     class BiLstm(nn.Module):
@@ -96,14 +91,13 @@ def models(model_name, task, hidden_size, num_layers):
 
 
 # define training function
-def training(model_name, criterion, task, tend_train, input_type_train, device,
-             num_layers, hidden_size, lr, training_num):
+def training(root, model_name, criterion, tend_train, num_layers, hidden_size, training_num, lr, device):
 
     # determine the model
-    model = models(model_name, task, hidden_size, num_layers)
+    model = models(model_name, hidden_size, num_layers)
 
     # determine the training data
-    u, u_torch, y_ref, y_ref_torch = data(task, input_type_train)
+    u, u_torch, y_ref, y_ref_torch = data(root, 'clean')
     dt = 0.01  # 1/sampling frequency
     Nt_train = math.floor(tend_train / dt) + 1  # length of training data set
     u_train = torch.tensor(u[0:Nt_train, :])  # training input
@@ -135,29 +129,28 @@ def training(model_name, criterion, task, tend_train, input_type_train, device,
     print("Total training time: %.3f s" % (end - start))
 
     # save model
-    torch.save(model.state_dict(), "./model_checkpoint/" +
-               str(model_name) + "_task" + str(task) + "_" + str(tend_train) +
-               "s_" + str(input_type_train) + "_to_clean" + str(training_num)+".pt")
+    torch.save(model.state_dict(), root + "\\Task 1 data-driven modeling\\project3_a_task_code\\model_checkpoint\\" +
+               str(model_name) + "_" + str(tend_train) + "s_" + str(training_num)+".pt")
 
 
 # define validation function
-def validation(model_name, criterion, task, tend_train, input_type_train, input_type_valid,
-               num_layers, hidden_size, training_num, model_input='whole length'):
+def validation(root, model_name, criterion, tend_train, num_layers, hidden_size, training_num,
+               input_type_valid, model_input):
 
     # determine the model
-    model = models(model_name, task, hidden_size, num_layers)
+    global y_pred
+    model = models(model_name, hidden_size, num_layers)
 
     # load model for validation
-    model.load_state_dict(torch.load("./model_checkpoint/" +
-                                     str(model_name) + "_task" + str(task) + "_" + str(tend_train) +
-                                     "s_" + str(input_type_train) + "_to_clean" + str(training_num) + ".pt"))
+    model.load_state_dict(torch.load(root + "\\Task 1 data-driven modeling\\project3_a_task_code\\model_checkpoint\\" +
+                                     str(model_name) + "_" + str(tend_train) + "s_" + str(training_num) + ".pt"))
 
     # load data for validation
-    _, u_torch, _, y_ref_torch = data(task, input_type_valid)
+    _, u_torch, _, y_ref_torch = data(root, input_type_valid)
     dt = 0.01  # 1/sampling frequency
     Nt_train = math.floor(tend_train / dt) + 1  # length of training data
 
-    # prediction results from task A or task B
+    # prediction results
     # for supposed training length
     if model_input == 'training length':
         y_pred = model(u_torch[0:Nt_train, :])
@@ -170,51 +163,32 @@ def validation(model_name, criterion, task, tend_train, input_type_train, input_
         y_pred = model(u_torch[-1000:, :])
         y_ref_torch = y_ref_torch[-1000:, :]
 
-    if task == 'A':
-        mse = criterion(y_ref_torch, y_pred)  # MSE for task A
-        print(f"MSE of Task 1a, A5: {mse.cpu().detach().numpy()}")
-
-    if task == 'B':
-        # extract A3 to A5 prediction for task B
-        y_pred_3, y_pred_4, y_pred_5 = y_pred[:, 0], y_pred[:, 1], y_pred[:, 2]
-        # extract A3 to A5 ground truth for task B
-        y_ref_torch_3, y_ref_torch_4, y_ref_torch_5 = y_ref_torch[:, 0], y_ref_torch[:, 1], y_ref_torch[:, 2]
-        # MSE for task B, e.g., the pair (y_ref_torch_3, y_pred_3) is for A3
-        mse_3 = criterion(y_ref_torch_3, y_pred_3)
-        mse_4 = criterion(y_ref_torch_4, y_pred_4)
-        mse_5 = criterion(y_ref_torch_5, y_pred_5)
-        print(f"MSE of Task 1b, A3: {mse_3.cpu().detach().numpy()}")
-        print(f"MSE of Task 1b, A4: {mse_4.cpu().detach().numpy()}")
-        print(f"MSE of Task 1b, A5: {mse_5.cpu().detach().numpy()}")
+    mse = criterion(y_ref_torch, y_pred)  # MSE for task A
+    print(f"MSE of Task 1a, A5: {mse.cpu().detach().numpy()}")
 
     # save last 10-second ground truth and prediction for drawing graph
     if model_input == 'last 10s length':
-        savemat('./last_10s_sample/' + str(model_name) + '_task' + str(task) + "_" + str(tend_train) +
-                "s_" + str(input_type_valid) + "_to_clean" + str(training_num) + '.mat',
+        savemat(root + "\\Task 1 data-driven modeling\\project3_a_task_code\\last_10s_sample\\" + str(model_name) + "_"
+                + str(tend_train) + "s_" + str(input_type_valid) + "_" + str(training_num) + '.mat',
                 {'pr': np.transpose(y_pred.detach().numpy()), 'gt': np.transpose(y_ref_torch.detach().numpy())})
 
 
 # define testing function
-def testing(model_name, task, tend_train, input_type_train, num_layers, hidden_size, training_num):
+def testing(root, model_name, tend_train, num_layers, hidden_size, training_num):
 
     # determine the model
-    model = models(model_name, task, hidden_size, num_layers)
+    model = models(model_name, hidden_size, num_layers)
 
     # load model for testing
-    model.load_state_dict(torch.load("./model_checkpoint/" +
-                                     str(model_name) + "_task" + str(task) + "_" + str(tend_train) +
-                                     "s_" + str(input_type_train) + "_to_clean" + str(training_num) + ".pt"))
+    model.load_state_dict(torch.load(root + "\\Task 1 data-driven modeling\\project3_a_task_code\\model_checkpoint\\" +
+                                     str(model_name) + "_" + str(tend_train) + "s_" + str(training_num) + ".pt"))
     # load data for testing
-    if task == 'A':
-        fi = np.transpose(loadmat('./a/data_noised_testset.mat')['data_noised'])
-        u = np.hstack((fi[:, 0:1], fi[:, 1:2], fi[:, 2:3], fi[:, 3:4]))  # input for task A
-    if task == 'B':
-        fi = np.transpose(loadmat('./b/data_noised_testset2.mat')['data_noised'])
-        u = np.hstack((fi[:, 0:1], fi[:, 1:2]))  # input for task B
+    fi = np.transpose(loadmat(root + '\\Task 1 data-driven modeling\\project3_a_task_code\\a\\data_noised_testset.mat')
+                      ['data_noised'])
+    u = np.hstack((fi[:, 0:1], fi[:, 1:2], fi[:, 2:3], fi[:, 3:4]))  # input for task A
     u_torch = torch.tensor(u)  # convert to tensor data
 
     # prediction results
     y_pred = model(u_torch.float())
 
     return y_pred
-
