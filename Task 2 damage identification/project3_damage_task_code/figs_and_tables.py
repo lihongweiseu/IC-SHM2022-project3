@@ -183,7 +183,7 @@ import scipy.io as io
 #     4, 4], lw=1, label='A5')
 # ax.set_xlabel(r'Frequency (Hz)', fontsize=8, labelpad=1)
 # ax.set_ylabel(
-#     r'PSD ($\mathregular{(m/s^2)^2}$/Hz)', fontsize=8, labelpad=1)
+#     r'PSD ($\mathregular{m^2/s^4/Hz}$)', fontsize=8, labelpad=1)
 # ax.set_xlim([5, 40])
 # ax.set_xticks(np.arange(5, 40.1, 5))
 # ax.set_ylim([1e-7, 1e-1])
