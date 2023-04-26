@@ -156,6 +156,56 @@ import scipy.io as io
 # plt.show()
 
 
+### Figure: 5 PSDs of train_1 ###
+# mat = io.loadmat(
+#     r'./Task 2 damage identification/project3_damage_task_code/data/train_dataset/train_1.mat')
+# mtx = mat['A']
+# vib_analysis = rand_vib(signal_mtx=mtx)
+# num = 2000
+# T = np.linspace(0, (num-1)/100, num)
+# col = ['k', 'b', 'r', 'g', 'm']
+# cm = 1 / 2.54
+# fig = plt.figure(figsize=(16 * cm, 7 * cm))
+# ax = fig.add_subplot(111)
+# f1, pxx1 = vib_analysis.psd_analysis(dim=0)
+# f2, pxx2 = vib_analysis.psd_analysis(dim=1)
+# f3, pxx3 = vib_analysis.psd_analysis(dim=2)
+# f4, pxx4 = vib_analysis.psd_analysis(dim=3)
+# f5, pxx5 = vib_analysis.psd_analysis(dim=4)
+# ax.semilogy(f1, pxx1, color=col[0], lw=1, label='A1')
+# ax.semilogy(f2, pxx2, color=col[1], dashes=[
+#     8, 4], lw=1, label='A2')
+# ax.semilogy(f3, pxx3, color=col[2], dashes=[
+#     8, 2], lw=1, label='A3')
+# ax.semilogy(f4, pxx4, color=col[3], dashes=[
+#     2, 2], lw=1, label='A4')
+# ax.semilogy(f5, pxx5, color=col[4], dashes=[
+#     4, 4], lw=1, label='A5')
+# ax.set_xlabel(r'Frequency (Hz)', fontsize=8, labelpad=1)
+# ax.set_ylabel(
+#     r'PSD ($\mathregular{(m/s^2)^2}$/Hz)', fontsize=8, labelpad=1)
+# ax.set_xlim([5, 40])
+# ax.set_xticks(np.arange(5, 40.1, 5))
+# ax.set_ylim([1e-7, 1e-1])
+# # ax.set_yticks(np.arange(-7, -0.9, 1))
+# ax.tick_params(axis='x', labelsize=8)
+# ax.tick_params(axis='y', labelsize=8)
+# legend = ax.legend(loc='upper right', bbox_to_anchor=(1.0, 1.0), borderpad=0.3, borderaxespad=0, handlelength=2.8,
+#                    edgecolor='black', fontsize=8, ncol=5, columnspacing=0.5, handletextpad=0.3)  # labelspacing=0
+# legend.get_frame().set_boxstyle('Square', pad=0.0)
+# legend.get_frame().set_lw(0.75)
+# legend.get_frame().set_alpha(None)
+# for obj in legend.legendHandles:
+#     obj.set_lw(0.75)
+# ax.tick_params(axis='x', direction='in')
+# ax.tick_params(axis='y', direction='in')
+# ax.tick_params(axis='y', which='minor', direction='in')
+# ax.grid()
+# fig.tight_layout(pad=0.1)
+# plt.savefig(r'./Task 2 damage identification/project3_damage_task_code/figs/F_fivepsd.pdf',  format="pdf",
+#             dpi=1200)
+# plt.show()
+
 ### Figure: Bayesian Optimization convergence curve ###
 # from skopt import load
 # from skopt.plots import plot_convergence
