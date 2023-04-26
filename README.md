@@ -13,9 +13,9 @@ To get started with our solution, you can follow these steps:
 - Check if the installed version of the packages meets the requirements
 - Set the folder IC-SHM2022-project3 as the workspace
 
-- Run [project3_a_task_code.py](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task_code.py>) in the folder [project3_a_task_code](<./Task 1 data-driven modeling/project3_a_task_code>) to obtain prediction [project3_a_task_code.txt](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task_code.txt>) for task 1a
+- Run [project3_a_task_code.py](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task_code.py>) in the folder [project3_a_task_code](<./Task 1 data-driven modeling/project3_a_task_code>) to obtain prediction [project3_a_task_code.txt](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task.txt>) for task 1a
 
-- Run [project3_b_task_code.py](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task_code.py>) in the folder [project3_b_task_code](<./Task 1 data-driven modeling/project3_b_task_code>) to obtain prediction [project3_b_task_code.txt](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task_code.txt>) for task 1b
+- Run [project3_b_task_code.py](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task_code.py>) in the folder [project3_b_task_code](<./Task 1 data-driven modeling/project3_b_task_code>) to obtain prediction [project3_b_task_code.txt](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task.txt>) for task 1b
 
 - Run [project3_damage_task_code.py](<./Task 2 damage identification/project3_damage_task_code/project3_damage_task_code.py>) in the folder [project3_damage_task_code](<./Task 2 damage identification/project3_damage_task_code>) to obtain the results of elastic modulus reduction in [project3_damage_task.txt](<./Task 2 damage identification/project3_damage_task.txt>) for task 2
 
