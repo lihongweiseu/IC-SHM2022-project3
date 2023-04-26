@@ -17,7 +17,7 @@ To get started with our solution, you can follow these steps:
 
 - Run [project3_b_task_code.py](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task_code.py>) in the folder [project3_b_task_code](<./Task 1 data-driven modeling/project3_b_task_code>) to obtain prediction [project3_b_task_code.txt](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task_code.txt>) for task 1b
 
-- Run [main.py](<./Task 2 damage identification/project3_damage_task_code/main.py>) in the folder [project3_damage_task_code](<./Task 2 damage identification/project3_damage_task_code>) to obtain the results of elastic modulus reduction in [project3_damage_task.txt](<./Task 2 damage identification/project3_damage_task.txt>) for task 2
+- Run [project3_damage_task_code.py](<./Task 2 damage identification/project3_damage_task_code/project3_damage_task_code.py>) in the folder [project3_damage_task_code](<./Task 2 damage identification/project3_damage_task_code>) to obtain the results of elastic modulus reduction in [project3_damage_task.txt](<./Task 2 damage identification/project3_damage_task.txt>) for task 2
 
 ### Requirements
 
@@ -76,7 +76,7 @@ dataset provided by the IC-SHM 2022 Committee for this task is completely unused
 The proposed method demonstrates that the mode shapes of a three-span continuous beam are independent of finite element model parameters and are only affected by the reduction rates of the elastic modulus (i.e., the damage factors). Moreover, we were able to construct a closed-form forward mapping that relates the damage factors to the mode shapes. By using this mapping, we generated a large number of label pairs whose feature and target domain are exchanged, which allowed us to train a deep neural network with mode shape ratios as input and damage factors as output. We used Bayesian optimization to automatically tune the hyper-parameters of the network for more accurate predictions. In this competition, we were provided with random vibration signals from five accelerometers. The frequency domain decomposition method was adopted to extract the mode shape of the beam, which was then fed into the neural network to compute the damage factors. An overview of the proposed method is shown as follows.
 
 <div align="center">
-	<img align="center" src="./Task 2 damage identification/project3_damage_task_code/figs/F_overview.png" width=500/>
+	<img align="center" src="./Task 2 damage identification/project3_damage_task_code/figs/F_overview.png" width=800/>
 </div>
 
 ### Results
@@ -106,7 +106,7 @@ Given the test dataset, our deep neural network could accurately predict the ela
    - [**neuralnets.py**](<./Task 2 damage identification/project3_damage_task_code/neuralnets.py>): Several classes including training data set generation, neural network definition and training, as well as the Bayesian optimization for hyper-parameters tuning.
    - [**oma.py**](<./Task 2 damage identification/project3_damage_task_code/oma.py>): A class for operational modal analysis using frequency domain decomposition.
    - [**figs_and_tables.py**](<./Task 2 damage identification/project3_damage_task_code/figs_and_tables.py>): Numerous methods to implement the figures and tables utilized in the report.
-   - [**main.py**](<./Task 2 damage identification/project3_damage_task_code/main.py>): Routines to predict the reduction of elastic modulus reduction rates.
+   - [**project3_damage_task_code.py**](<./Task 2 damage identification/project3_damage_task_code/project3_damage_task_code.py>): Routines to predict the reduction of elastic modulus reduction rates.
    - [**data**](<./Task 2 damage identification/project3_damage_task_code/data>): Training and test dataset provided in IC-SHM 2022 Committee, training histories for neural networks and Bayesian optimization.
    - [**figs**](<./Task 2 damage identification/project3_damage_task_code/figs>): Figures for random vibration, normalized root mean square error matrix, Bayesian optimization and neural network convergence plots.
    <!--
