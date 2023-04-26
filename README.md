@@ -47,17 +47,17 @@ The effectiveness of the model is validated by using data noised.mat. The MSEs o
 
 ### Folder Structure
 
-1. **project3_a_task_code**:
+1. [**project3_a_task_code**](<./Task 1 data-driven modeling/project3_a_task_code>):
 
    - [**project3_a_task.txt**](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task.txt>): The predictions in task 1a required by IC-SHM 2022 Committee.
    - [**project3_a_task_code.py**](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task_code.py>): Routines to test the model for predictions in task 1a.
    - [**main.py**](<./Task 1 data-driven modeling/project3_a_task_code/main.py>): Routines to train and validate the model in task 1a.
    - [**tool.py**](<./Task 1 data-driven modeling/project3_a_task_code/tool.py>): Functions for loading task 1a data, establishing neural networks, and training, validating, and testing the model.
-   - [**a**](<./Task 1 data-driven modeling/project3_a_task_code/a>): Training and test dataset of task 1a provided in IC-SHM 2022 Committee.
+   - [**a**](<./Task 1 data-driven modeling/project3_a_task_code/a>): Training and test dataset of task 1a provided by IC-SHM 2022 Committee.
    - [**model_checkpoint**](<./Task 1 data-driven modeling/project3_a_task_code/model_checkpoint>): Saved model weights for validating and testing the model in task 1a.
    - [**last_10s_sample**](<./Task 1 data-driven modeling/project3_a_task_code/last_10s_sample>): Ground truths and predictions extracted from the last 10-second task 1a data for comparison.
 
-2. **project3_b_task_code**:
+2. [**project3_b_task_code**](<./Task 1 data-driven modeling/project3_b_task_code>):
    - [**project3_b_task.txt**](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task.txt>): The predictions in task 1b required by IC-SHM 2022 Committee.
    - [**project3_b_task_code.py**](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task_code.py>): Routines to test the model for predictions in task 1b.
    - [**main.py**](<./Task 1 data-driven modeling/project3_b_task_code/main.py>): Routines to train and validate the model in task 1b.
@@ -76,7 +76,7 @@ dataset provided by the IC-SHM 2022 Committee for this task is completely unused
 The proposed method demonstrates that the mode shapes of a three-span continuous beam are independent of finite element model parameters and are only affected by the reduction rates of the elastic modulus (i.e., the damage factors). Moreover, we were able to construct a closed-form forward mapping that relates the damage factors to the mode shapes. By using this mapping, we generated a large number of label pairs whose feature and target domain are exchanged, which allowed us to train a deep neural network with mode shape ratios as input and damage factors as output. We used Bayesian optimization to automatically tune the hyper-parameters of the network for more accurate predictions. In this competition, we were provided with random vibration signals from five accelerometers. The frequency domain decomposition method was adopted to extract the mode shape of the beam, which was then fed into the neural network to compute the damage factors. An overview of the proposed method is shown as follows.
 
 <div align="center">
-	<img align="center" src="./Task 2 damage identification/project3_damage_task_code/figs/F_overview.png" width=800/>
+	<img align="center" src="./Task 2 damage identification/project3_damage_task_code/figs/F_overview.png" width=500/>
 </div>
 
 ### Results
@@ -100,7 +100,7 @@ Given the test dataset, our deep neural network could accurately predict the ela
 
 1. [**project3_damage_task.txt**](<./Task 2 damage identification/project3_damage_task.txt>): The elastic modulus reduction rates of three units for 6 test data sets.
 
-2. **project3_damage_task_code**:
+2. [**project3_damage_task_code**](<./Task 2 damage identification/project3_damage_task_code>):
 
    - [**fembeam.py**](<./Task 2 damage identification/project3_damage_task_code/fembeam.py>): A class that constructs the finite element model for the three-span continuous bridge.
    - [**neuralnets.py**](<./Task 2 damage identification/project3_damage_task_code/neuralnets.py>): Several classes including training data set generation, neural network definition and training, as well as the Bayesian optimization for hyper-parameters tuning.
