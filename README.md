@@ -12,8 +12,12 @@ To get started with our solution, you can follow these steps:
 - Clone this repository to your local machine
 - Check if the installed version of the packages meets the requirements
 - Set the folder IC-SHM2022-project3 as the workspace
-- For task 1
-- Run main.py in the folder of Task 2 damage identification, and check the results of elastic modulus reduction in project3_damage_task.txt in the same folder
+
+- Run [project3_a_task_code.py](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task_code.py>) in the folder [project3_a_task_code](<./Task 1 data-driven modeling/project3_a_task_code>) to obtain prediction [project3_a_task_code.txt](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task_code.txt>) for task 1a
+
+- Run [project3_b_task_code.py](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task_code.py>) in the folder [project3_b_task_code](<./Task 1 data-driven modeling/project3_b_task_code>) to obtain prediction [project3_b_task_code.txt](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task_code.txt>) for task 1b
+
+- Run [main.py](<./Task 2 damage identification/project3_damage_task_code/main.py>) in the folder [project3_damage_task_code](<./Task 2 damage identification/project3_damage_task_code>) to obtain the results of elastic modulus reduction in [project3_damage_task.txt](<./Task 2 damage identification/project3_damage_task.txt>) for task 2
 
 ### Requirements
 
@@ -22,6 +26,44 @@ To get started with our solution, you can follow these steps:
 - SciPy >= 1.9.3
 
 ## Task 1: Data-driven Modeling
+
+In this task, we aim to reconstruct the lost data without the noises of one accelerometer A5 in the data noised testset.mat (100 s), and three accelerometers A3-A5 in data noised testset2.mat (100 s), respectively, through the bidirectional Long-Short Term Memory (BiLSTM) network. Only the data of the first 10 s in data clean.mat is used for training and data of the rest 9,990 s are used for validation. It is demonstrated that the mean square error (MSE) of the reconstructed data is at a very low magnitude of $1\times10^{-5}$.
+
+### Methodology
+
+BiLSTM network is a kind of recurrent neural network (RNN) that allow previous outputs to be used as a part of current input, therefore it is suitable for time-series modeling. The architecture of the BiLSTM network is shown below, where LSTM blocks receive $x_0, x_1, \dots,x_j$ in sequence from the input layer and generate $h_0, h_1, \dots,h_j$ to the output layer. The recurrent connection between adjacent LSTM blocks enables the past information to be memorized and reused in the data processing. In BiLSTM, the information is transmitted both forward and backward. The hidden states computed from two information flows are concatenated to generate the output sequence. Therefore, BiLSTM is powerful in forming the evolution of the hidden states during the time-series processing, based on both past and future.
+
+### Results
+
+The effectiveness of the model is validated by using data noised.mat. The MSEs of task 1a and task 1b are shown in the following table (unit: $1\times 10^{-5} \text{m}^2/\text{s}^{4}$). The ground truth and prediction results are shown in the following figure: (a) A5 in task 1a, and (b) A3, (c) A4, and (d) A5 in task 1b.
+
+<div align="center">
+
+| Task 1a <br/> (A5) | Task 1b <br/>(A3) | Task 1b <br/>(A4) | Task 1b n <br/>(A5) |
+| :----------------: | :---------------: | :---------------: | :-----------------: |
+|       2.8765       |      2.6005       |      3.0368       |       4.7185        |
+
+</div>
+
+### Folder Structure
+
+1. project3_a_task_code
+   project3_a_task.txt: The predictions in task 1a required by IC-SHM 2022 Committee.
+   project3_a_task_code.py: Routines to test the model for predictions in task 1a.
+   main.py: Routines to train and validate the model in task 1a.
+   tool.py: Functions for loading task 1a data, establishing neural networks, and training, validating, and testing the model.
+   a: Training and test dataset of task 1a provided in IC-SHM 2022 Committee.
+   model_checkpoint: Saved model weights for validating and testing the model in task 1a.
+   last_10s_sample: Ground truths and predictions extracted from the last 10-second task 1a data for comparison.
+
+2. project3_b_task_code
+   project3_b_task.txt: The predictions in task 1b required by IC-SHM 2022 Committee.
+   project3_b_task_code.py: Routines to test the model for predictions in task 1b.
+   main.py: Routines to train and validate the model in task 1b.
+   tool.py: Functions for loading task 1b data, establishing neural networks, and training, validating, and testing the model.
+   b: Training and test dataset of task 1b provided in IC-SHM 2022 Committee.
+   model_checkpoint: Saved model weights for validating and testing the model in task 1b.
+   last_10s_sample: Ground truths and predictions extracted from the last 10-second task 1b data for comparison.
 
 ## Task 2: Damage Identification
 
