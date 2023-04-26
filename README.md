@@ -126,4 +126,7 @@ This project is licensed under the MIT License - see the [LICENCE](./LICENCE) fi
 
 ## Acknowledgments
 
-Thank XXX
+The work described in this report was supported by a grant from the Research Grants Council (RGC) of the Hong
+Kong Special Administrative Region (SAR), China (Grant No. PolyU 152308/22E). The authors also appreciate the
+funding support by the Innovation and Technology Commission of Hong Kong SAR Government to the Hong Kong
+Branch of National Engineering Research Center on Rail Transit Electrification and Automation (Grant No. K-BBY1) and The Hong Kong Polytechnic University’s Postdoc Matching Fund Scheme (Grant No. 1-W24B).
