@@ -33,6 +33,10 @@ In this task, we aim to reconstruct the lost data without the noises of one acce
 
 BiLSTM network is a kind of recurrent neural network (RNN) that allow previous outputs to be used as a part of current input, therefore it is suitable for time-series modeling. The architecture of the BiLSTM network is shown below, where LSTM blocks receive $x_0, x_1, \dots,x_j$ in sequence from the input layer and generate $h_0, h_1, \dots,h_j$ to the output layer. The recurrent connection between adjacent LSTM blocks enables the past information to be memorized and reused in the data processing. In BiLSTM, the information is transmitted both forward and backward. The hidden states computed from two information flows are concatenated to generate the output sequence. Therefore, BiLSTM is powerful in forming the evolution of the hidden states during the time-series processing, based on both past and future.
 
+<div align="center">
+	<img align="center" src="./Task 1 data-driven modeling/figs/F_bilstm.png" width=800/>
+</div>
+
 ### Results
 
 The effectiveness of the model is validated by using data noised.mat. The MSEs of task 1a and task 1b are shown in the following table (unit: $1\times 10^{-5} \text{m}^2/\text{s}^{4}$). The ground truth and prediction results are shown in the following figure: (a) A5 in task 1a, and (b) A3, (c) A4, and (d) A5 in task 1b.
@@ -43,6 +47,10 @@ The effectiveness of the model is validated by using data noised.mat. The MSEs o
 | :----------------: | :---------------: | :---------------: | :---------------: |
 |       2.8765       |      2.6005       |      3.0368       |      4.7185       |
 
+</div>
+
+<div align="center">
+	<img align="center" src="./Task 1 data-driven modeling/figs/F_reconstructed_signals.png" width=800/>
 </div>
 
 ### Folder Structure
@@ -73,7 +81,7 @@ dataset provided by the IC-SHM 2022 Committee for this task is completely unused
 
 ### Methodology
 
-The proposed method demonstrates that the mode shapes of a three-span continuous beam are independent of finite element model parameters and are only affected by the reduction rates of the elastic modulus (i.e., the damage factors). Moreover, we were able to construct a closed-form forward mapping that relates the damage factors to the mode shapes. By using this mapping, we generated a large number of label pairs whose feature and target domain are exchanged, which allowed us to train a deep neural network with mode shape ratios as input and damage factors as output. We used Bayesian optimization to automatically tune the hyper-parameters of the network for more accurate predictions. In this competition, we were provided with random vibration signals from five accelerometers. The frequency domain decomposition method was adopted to extract the mode shape of the beam, which was then fed into the neural network to compute the damage factors. An overview of the proposed method is shown as follows.
+The proposed method demonstrates that the mode shapes of a three-span continuous beam are independent of finite element model parameters and are only affected by the reduction rates of the elastic modulus (i.e., the damage factors). Moreover, we are able to construct a closed-form forward mapping that relates the damage factors to the mode shapes. By using this mapping, we generate a large number of label pairs whose feature and target domain are exchanged, which allows us to train a deep neural network with mode shape ratios as input and damage factors as output. We use Bayesian optimization to automatically tune the hyper-parameters of the network for more accurate predictions. In this competition, we are provided with random vibration signals from A1 to A5. The frequency domain decomposition method is adopted to extract the mode shape of the beam, which is then fed into the neural network to compute the damage factors. An overview of the proposed method is shown as follows.
 
 <div align="center">
 	<img align="center" src="./Task 2 damage identification/project3_damage_task_code/figs/F_overview.png" width=800/>
