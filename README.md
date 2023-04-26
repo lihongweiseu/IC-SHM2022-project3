@@ -39,31 +39,32 @@ The effectiveness of the model is validated by using data noised.mat. The MSEs o
 
 <div align="center">
 
-| Task 1a <br/> (A5) | Task 1b <br/>(A3) | Task 1b <br/>(A4) | Task 1b n <br/>(A5) |
-| :----------------: | :---------------: | :---------------: | :-----------------: |
-|       2.8765       |      2.6005       |      3.0368       |       4.7185        |
+| Task 1a <br/> (A5) | Task 1b <br/>(A3) | Task 1b <br/>(A4) | Task 1b <br/>(A5) |
+| :----------------: | :---------------: | :---------------: | :---------------: |
+|       2.8765       |      2.6005       |      3.0368       |      4.7185       |
 
 </div>
 
 ### Folder Structure
 
-1. project3_a_task_code
-   project3_a_task.txt: The predictions in task 1a required by IC-SHM 2022 Committee.
-   project3_a_task_code.py: Routines to test the model for predictions in task 1a.
-   main.py: Routines to train and validate the model in task 1a.
-   tool.py: Functions for loading task 1a data, establishing neural networks, and training, validating, and testing the model.
-   a: Training and test dataset of task 1a provided in IC-SHM 2022 Committee.
-   model_checkpoint: Saved model weights for validating and testing the model in task 1a.
-   last_10s_sample: Ground truths and predictions extracted from the last 10-second task 1a data for comparison.
+1. **project3_a_task_code**:
 
-2. project3_b_task_code
-   project3_b_task.txt: The predictions in task 1b required by IC-SHM 2022 Committee.
-   project3_b_task_code.py: Routines to test the model for predictions in task 1b.
-   main.py: Routines to train and validate the model in task 1b.
-   tool.py: Functions for loading task 1b data, establishing neural networks, and training, validating, and testing the model.
-   b: Training and test dataset of task 1b provided in IC-SHM 2022 Committee.
-   model_checkpoint: Saved model weights for validating and testing the model in task 1b.
-   last_10s_sample: Ground truths and predictions extracted from the last 10-second task 1b data for comparison.
+   - [**project3_a_task.txt**](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task.txt>): The predictions in task 1a required by IC-SHM 2022 Committee.
+   - [**project3_a_task_code.py**](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task_code.py>): Routines to test the model for predictions in task 1a.
+   - [**main.py**](<./Task 1 data-driven modeling/project3_a_task_code/main.py>): Routines to train and validate the model in task 1a.
+   - [**tool.py**](<./Task 1 data-driven modeling/project3_a_task_code/tool.py>): Functions for loading task 1a data, establishing neural networks, and training, validating, and testing the model.
+   - [**a**](<./Task 1 data-driven modeling/project3_a_task_code/a>): Training and test dataset of task 1a provided in IC-SHM 2022 Committee.
+   - [**model_checkpoint**](<./Task 1 data-driven modeling/project3_a_task_code/model_checkpoint>): Saved model weights for validating and testing the model in task 1a.
+   - [**last_10s_sample**](<./Task 1 data-driven modeling/project3_a_task_code/last_10s_sample>): Ground truths and predictions extracted from the last 10-second task 1a data for comparison.
+
+2. **project3_b_task_code**:
+   - [**project3_b_task.txt**](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task.txt>): The predictions in task 1b required by IC-SHM 2022 Committee.
+   - [**project3_b_task_code.py**](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task_code.py>): Routines to test the model for predictions in task 1b.
+   - [**main.py**](<./Task 1 data-driven modeling/project3_b_task_code/main.py>): Routines to train and validate the model in task 1b.
+   - [**tool.py**](<./Task 1 data-driven modeling/project3_b_task_code/tool.py>): Functions for loading task 1b data, establishing neural networks, and training, validating, and testing the model.
+   - [**b**](<./Task 1 data-driven modeling/project3_b_task_code/b>): Training and test dataset of task 1b provided in IC-SHM 2022 Committee.
+   - [**model_checkpoint**](<./Task 1 data-driven modeling/project3_b_task_code/model_checkpoint>): Saved model weights for validating and testing the model in task 1b.
+   - [**last_10s_sample**](<./Task 1 data-driven modeling/project3_b_task_code/last_10s_sample>): Ground truths and predictions extracted from the last 10-second task 1b data for comparison.
 
 ## Task 2: Damage Identification
 
@@ -97,16 +98,19 @@ Given the test dataset, our deep neural network could accurately predict the ela
 
 ### Folder Structure
 
-1. **project3_damage_task.txt**: The elastic modulus reduction rates of three units for 6 test data sets.
-2. **project3_damage_task_code**: Python source codes, data, and figures to demonstrate and reproduce the results. The data and figures are organized in individual folders, and the source codes are presented directly in this folder.
+1. [**project3_damage_task.txt**](<./Task 2 damage identification/project3_damage_task.txt>): The elastic modulus reduction rates of three units for 6 test data sets.
 
-   - **fembeam.py**: A class that constructs the finite element model for the three-span continuous bridge.
-   - **neuralnets.py**: Several classes including training data set generation, neural network definition and training, as well as the Bayesian optimization for hyper-parameters tuning.
-   - **oma.py**: A class for operational modal analysis using frequency domain decomposition.
-   - **figs_and_tables.py**: Numerous methods to implement the figures and tables utilized in the report.
-   - **main.py**: Routines to predict the reduction of elastic modulus reduction rates.
-   - **data**: Training and test dataset provided in IC-SHM 2022 Committee, training histories for neural networks and Bayesian optimization.
-   - **figs**: Figures for random vibration, normalized root mean square error matrix, Bayesian optimization and neural network convergence plots.
+2. **project3_damage_task_code**:
+
+   - [**fembeam.py**](<./Task 2 damage identification/project3_damage_task_code/fembeam.py>): A class that constructs the finite element model for the three-span continuous bridge.
+   - [**neuralnets.py**](<./Task 2 damage identification/project3_damage_task_code/neuralnets.py>): Several classes including training data set generation, neural network definition and training, as well as the Bayesian optimization for hyper-parameters tuning.
+   - [**oma.py**](<./Task 2 damage identification/project3_damage_task_code/oma.py>): A class for operational modal analysis using frequency domain decomposition.
+   - [**figs_and_tables.py**](<./Task 2 damage identification/project3_damage_task_code/figs_and_tables.py>): Numerous methods to implement the figures and tables utilized in the report.
+   - [**main.py**](<./Task 2 damage identification/project3_damage_task_code/main.py>): Routines to predict the reduction of elastic modulus reduction rates.
+   - [**data**](<./Task 2 damage identification/project3_damage_task_code/data>): Training and test dataset provided in IC-SHM 2022 Committee, training histories for neural networks and Bayesian optimization.
+   - [**figs**](<./Task 2 damage identification/project3_damage_task_code/figs>): Figures for random vibration, normalized root mean square error matrix, Bayesian optimization and neural network convergence plots.
+   <!--
+   Python source codes, data, and figures to demonstrate and reproduce the results. The data and figures are organized in individual folders, and the source codes are presented directly in this folder. -->
 
 ## License
 
