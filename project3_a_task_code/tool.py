@@ -12,19 +12,21 @@ from scipy.io import savemat, loadmat
 def data(root, input_type):
     global fi
     if input_type == 'clean':
-        fi = np.transpose(loadmat(root + '/project3_a_task_code/a/data_clean.mat')
+        fi = np.transpose(loadmat(root + '/a/data_clean.mat')
                           ['data'])  # clean input data
 
     if input_type == 'noise':
-        fi = np.transpose(loadmat(root + '/project3_a_task_code/a/data_noised.mat')
+        fi = np.transpose(loadmat(root + '/a/data_noised.mat')
                           ['data_noised'])  # noised input data
 
-    fo = np.transpose(loadmat(root + '/project3_a_task_code/a/data_clean.mat')
+    fo = np.transpose(loadmat(root + '/a/data_clean.mat')
                       ['data'])  # output data
 
-    u = np.hstack((fi[:, 0:1], fi[:, 1:2], fi[:, 2:3], fi[:, 3:4]))  # input for task A
+    u = np.hstack((fi[:, 0:1], fi[:, 1:2], fi[:, 2:3],
+                  fi[:, 3:4]))  # input for task A
     y_ref = fo[:, 4:5]  # output for task A
-    u_torch, y_ref_torch = torch.tensor(u), torch.tensor(y_ref)  # convert to tensor data
+    u_torch, y_ref_torch = torch.tensor(
+        u), torch.tensor(y_ref)  # convert to tensor data
 
     return u, u_torch, y_ref, y_ref_torch
 
@@ -38,7 +40,8 @@ def models(model_name, hidden_size, num_layers):
     class BiLstm(nn.Module):
         def __init__(self):
             super(BiLstm, self).__init__()
-            self.lstm = nn.LSTM(input_size, hidden_size, num_layers, bidirectional=True)
+            self.lstm = nn.LSTM(input_size, hidden_size,
+                                num_layers, bidirectional=True)
             self.linear = nn.Linear(2*hidden_size, output_size)
 
         def forward(self, u):
@@ -101,7 +104,8 @@ def training(root, model_name, criterion, tend_train, num_layers, hidden_size, t
     dt = 0.01  # 1/sampling frequency
     Nt_train = math.floor(tend_train / dt) + 1  # length of training data set
     u_train = torch.tensor(u[0:Nt_train, :])  # training input
-    y_train_ref = torch.tensor(y_ref[0:Nt_train, :]).to(device)  # training output
+    y_train_ref = torch.tensor(y_ref[0:Nt_train, :]).to(
+        device)  # training output
 
     optimizer = optim.Adam(model.parameters(), lr)
     loss_all = np.zeros((training_num + 1, 1))
@@ -123,13 +127,14 @@ def training(root, model_name, criterion, tend_train, num_layers, hidden_size, t
             print("Average training time: %.6f s per one training" % per_time)
             print("Cumulative training time: %.6f s" % (end - start))
             left_time = (training_num - i + 1) * per_time
-            print(f"Executed at {time.strftime('%H:%M:%S', time.localtime())},", "left time: %.6f s\n" % left_time)
+            print(f"Executed at {time.strftime('%H:%M:%S', time.localtime())},",
+                  "left time: %.6f s\n" % left_time)
 
     end = time.time()
     print("Total training time: %.3f s" % (end - start))
 
     # save model
-    torch.save(model.state_dict(), root + "/project3_a_task_code/model_checkpoint/" +
+    torch.save(model.state_dict(), root + "/model_checkpoint/" +
                str(model_name) + "_" + str(tend_train) + "s_" + str(training_num)+".pt")
 
 
@@ -142,7 +147,7 @@ def validation(root, model_name, criterion, tend_train, num_layers, hidden_size,
     model = models(model_name, hidden_size, num_layers)
 
     # load model for validation
-    model.load_state_dict(torch.load(root + "/project3_a_task_code/model_checkpoint/" +
+    model.load_state_dict(torch.load(root + "/model_checkpoint/" +
                                      str(model_name) + "_" + str(tend_train) + "s_" + str(training_num) + ".pt"))
 
     # load data for validation
@@ -170,12 +175,13 @@ def testing(root, model_name, tend_train, num_layers, hidden_size, training_num)
     model = models(model_name, hidden_size, num_layers)
 
     # load model for testing
-    model.load_state_dict(torch.load(root + "/project3_a_task_code/model_checkpoint/" +
+    model.load_state_dict(torch.load(root + "/model_checkpoint/" +
                                      str(model_name) + "_" + str(tend_train) + "s_" + str(training_num) + ".pt"))
     # load data for testing
-    fi = np.transpose(loadmat(root + '/project3_a_task_code/a/data_noised_testset.mat')
+    fi = np.transpose(loadmat(root + '/a/data_noised_testset.mat')
                       ['data_noised'])
-    u = np.hstack((fi[:, 0:1], fi[:, 1:2], fi[:, 2:3], fi[:, 3:4]))  # input for task A
+    u = np.hstack((fi[:, 0:1], fi[:, 1:2], fi[:, 2:3],
+                  fi[:, 3:4]))  # input for task A
     u_torch = torch.tensor(u)  # convert to tensor data
 
     # prediction results
