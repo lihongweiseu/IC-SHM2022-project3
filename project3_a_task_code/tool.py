@@ -12,14 +12,14 @@ from scipy.io import savemat, loadmat
 def data(root, input_type):
     global fi
     if input_type == 'clean':
-        fi = np.transpose(loadmat(root + '\\Task 1 data-driven modeling\\project3_a_task_code\\a\\data_clean.mat')
+        fi = np.transpose(loadmat(root + '/project3_a_task_code/a/data_clean.mat')
                           ['data'])  # clean input data
 
     if input_type == 'noise':
-        fi = np.transpose(loadmat(root + '\\Task 1 data-driven modeling\\project3_a_task_code\\a\\data_noised.mat')
+        fi = np.transpose(loadmat(root + '/project3_a_task_code/a/data_noised.mat')
                           ['data_noised'])  # noised input data
 
-    fo = np.transpose(loadmat(root + '\\Task 1 data-driven modeling\\project3_a_task_code\\a\\data_clean.mat')
+    fo = np.transpose(loadmat(root + '/project3_a_task_code/a/data_clean.mat')
                       ['data'])  # output data
 
     u = np.hstack((fi[:, 0:1], fi[:, 1:2], fi[:, 2:3], fi[:, 3:4]))  # input for task A
@@ -129,7 +129,7 @@ def training(root, model_name, criterion, tend_train, num_layers, hidden_size, t
     print("Total training time: %.3f s" % (end - start))
 
     # save model
-    torch.save(model.state_dict(), root + "\\Task 1 data-driven modeling\\project3_a_task_code\\model_checkpoint\\" +
+    torch.save(model.state_dict(), root + "/project3_a_task_code/model_checkpoint/" +
                str(model_name) + "_" + str(tend_train) + "s_" + str(training_num)+".pt")
 
 
@@ -142,7 +142,7 @@ def validation(root, model_name, criterion, tend_train, num_layers, hidden_size,
     model = models(model_name, hidden_size, num_layers)
 
     # load model for validation
-    model.load_state_dict(torch.load(root + "\\Task 1 data-driven modeling\\project3_a_task_code\\model_checkpoint\\" +
+    model.load_state_dict(torch.load(root + "/project3_a_task_code/model_checkpoint/" +
                                      str(model_name) + "_" + str(tend_train) + "s_" + str(training_num) + ".pt"))
 
     # load data for validation
@@ -158,19 +158,9 @@ def validation(root, model_name, criterion, tend_train, num_layers, hidden_size,
     # for validate whole 10000-second length
     if model_input == 'whole length':
         y_pred = model(u_torch)
-    # for validate last 10-second testing length
-    if model_input == 'last 10s length':
-        y_pred = model(u_torch[-1000:, :])
-        y_ref_torch = y_ref_torch[-1000:, :]
 
     mse = criterion(y_ref_torch, y_pred)  # MSE for task A
     print(f"MSE of Task 1a, A5: {mse.cpu().detach().numpy()}")
-
-    # save last 10-second ground truth and prediction for drawing graph
-    if model_input == 'last 10s length':
-        savemat(root + "\\Task 1 data-driven modeling\\project3_a_task_code\\last_10s_sample\\" + str(model_name) + "_"
-                + str(tend_train) + "s_" + str(input_type_valid) + "_" + str(training_num) + '.mat',
-                {'pr': np.transpose(y_pred.detach().numpy()), 'gt': np.transpose(y_ref_torch.detach().numpy())})
 
 
 # define testing function
@@ -180,10 +170,10 @@ def testing(root, model_name, tend_train, num_layers, hidden_size, training_num)
     model = models(model_name, hidden_size, num_layers)
 
     # load model for testing
-    model.load_state_dict(torch.load(root + "\\Task 1 data-driven modeling\\project3_a_task_code\\model_checkpoint\\" +
+    model.load_state_dict(torch.load(root + "/project3_a_task_code/model_checkpoint/" +
                                      str(model_name) + "_" + str(tend_train) + "s_" + str(training_num) + ".pt"))
     # load data for testing
-    fi = np.transpose(loadmat(root + '\\Task 1 data-driven modeling\\project3_a_task_code\\a\\data_noised_testset.mat')
+    fi = np.transpose(loadmat(root + '/project3_a_task_code/a/data_noised_testset.mat')
                       ['data_noised'])
     u = np.hstack((fi[:, 0:1], fi[:, 1:2], fi[:, 2:3], fi[:, 3:4]))  # input for task A
     u_torch = torch.tensor(u)  # convert to tensor data
