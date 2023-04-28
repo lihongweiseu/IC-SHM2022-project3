@@ -1,3 +1,4 @@
+# %%
 from oma import rand_vib
 from neuralnets import NeuralNetwork
 import os
