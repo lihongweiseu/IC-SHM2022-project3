@@ -4,11 +4,11 @@ import os
 import scipy.io as io
 import torch
 import numpy as np
-# This line is added by Hong-Wei Li to test Git push
+# Pls add project_damage_task_code to the working directory
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
-test_data_path = r'./Task 2 damage identification/project3_damage_task_code/data/test_dataset/'
-neural_net_path = r'./Task 2 damage identification/project3_damage_task_code/data/neural_nets/'
+test_data_path = r'./data/test_dataset/'
+neural_net_path = r'./data/neural_nets/'
 num_neuron = 512
 num_hidden_layer = 6
 nn_structure = [4]+[num_neuron]*num_hidden_layer+[3]
@@ -29,5 +29,5 @@ for i, file_name in enumerate(file_names):
     print(pred.detach().numpy())
     pred_list.append(pred.detach().numpy())
 pred_list = np.array(pred_list).reshape(6, 3)
-np.savetxt(r'./Task 2 damage identification/'+'project3_damage_task.txt',
+np.savetxt(r'./project3_damage_task.txt',
            pred_list, fmt='%f', delimiter=',')

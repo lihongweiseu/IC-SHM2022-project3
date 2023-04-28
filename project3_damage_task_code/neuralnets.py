@@ -256,7 +256,8 @@ def use_res_train_nn(data_path, use_norm):
 
 
 # if __name__ == '__main__':
-#     data_path = './Task 2 damage identification/project3_damage_task_code/data/neural_nets/'
+# Pls add project_damage_task_code to the working directory
+#     data_path = './data/neural_nets/'
     # Generate the training and test data based on finite element model
     # My_data = Gen_Data(data_path)
     # My_data.gen_train_data()
