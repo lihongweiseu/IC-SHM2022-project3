@@ -256,14 +256,14 @@ def use_res_train_nn(data_path, use_norm):
 
 
 # if __name__ == '__main__':
-# Pls add project_damage_task_code to the working directory
+# # Pls add project_damage_task_code to the working directory
 #     data_path = './data/neural_nets/'
-    # Generate the training and test data based on finite element model
+    # # Generate the training and test data based on finite element model
     # My_data = Gen_Data(data_path)
     # My_data.gen_train_data()
     # My_data.gen_test_data()
 
-    # if you want to try the bayes optimization, uncomment the following line
+    # # if you want to try the bayes optimization, uncomment the following line
     # bayes_opt_nn('tanh', data_path, num_max_iter=15, use_norm=True)
     # bayes_opt_nn('sigmoid', data_path, num_max_iter=15, use_norm=True)
     # bayes_opt_nn('relu', data_path, num_max_iter=15, use_norm=True)
