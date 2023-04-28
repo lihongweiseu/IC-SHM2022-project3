@@ -6,6 +6,7 @@ The repository contains the code and documentation for our team's entry in the 3
 - Task 2: damage identification
 
 In the root directory, the following three .txt files are the required results for two tasks.
+
 - Task 1a: **project3_a_task_code.txt**
 - Task 1b: **project3_b_task_code.txt**
 - Task 2: **project3_damage_task.txt**
@@ -17,16 +18,16 @@ To get started with our solution, you can follow these steps:
 - Clone this repository to your local machine
 - Check if the installed version of the packages meets the requirements
 - PyCharm or VScode is recommended to run codes
-- For task 1a, set the folder **project3_a_task_code** as workspace, run [project3_a_task_code.py](<./project3_a_task_code/project3_a_task_code.py>) to reproduce **project3_a_task_code.txt**.
-- For task 1b, set the folder **project3_b_task_code** as workspace, run [project3_b_task_code.py](<./project3_b_task_code/project3_b_task_code.py>) to reproduce **project3_b_task_code.txt**.
-- For task 2, set the folder **project3_damage_task_code** as workspace, run [project3_damage_task_code.py](<./project3_damage_task_code/project3_damage_task_code.py>) to reproduce **project3_damage_task.txt**.
+- For task 1a, set the folder **project3_a_task_code** as workspace, run [project3_a_task_code.py](./project3_a_task_code/project3_a_task_code.py) to reproduce **project3_a_task_code.txt**.
+- For task 1b, set the folder **project3_b_task_code** as workspace, run [project3_b_task_code.py](./project3_b_task_code/project3_b_task_code.py) to reproduce **project3_b_task_code.txt**.
+- For task 2, set the folder **project3_damage_task_code** as workspace, run [project3_damage_task_code.py](./project3_damage_task_code/project3_damage_task_code.py) to reproduce **project3_damage_task.txt**.
 
 ### Requirements
 
 - Python >= 3.8.0
 - Pytorch >= 1.12.1
 - SciPy >= 1.9.3
-- scikit-optimize >= 0.9.0
+- Scikit-optimize >= 0.9.0
 
 ## Task 1: Data-driven Modeling
 
@@ -59,18 +60,19 @@ The effectiveness of the model is validated by using data noised.mat. The MSEs o
 ### Folder Structure
 
 1. **project3_a_task_code**:
-   - [**project3_a_task_code.py**](<./project3_a_task_code/project3_a_task_code.py>): code to load trained model to reproduce the result for task 1a, and run it will generate **project3_a_task_code.txt** in workspace. 
-   - [**main.py**](<./project3_a_task_code/main.py>): code to train and validate the model in task 1a.
-   - [**tool.py**](<./project3_a_task_code/tool.py>): functions for loading task 1a data, establishing neural networks, and training, validating, and testing the model.
-   - [**a**](<./project3_a_task_code/a>): training and test dataset of task 1a provided by IC-SHM 2022 Committee.
-   - [**model_checkpoint**](<./project3_a_task_code/model_checkpoint>): saved trained models of task 1a.
+
+   - [**project3_a_task_code.py**](./project3_a_task_code/project3_a_task_code.py): code to load trained model to reproduce the result for task 1a, and run it will generate **project3_a_task_code.txt** in workspace.
+   - [**main.py**](./project3_a_task_code/main.py): code to train and validate the model in task 1a.
+   - [**tool.py**](./project3_a_task_code/tool.py): functions for loading task 1a data, establishing neural networks, and training, validating, and testing the model.
+   - [**a**](./project3_a_task_code/a): training and test dataset of task 1a provided by IC-SHM 2022 Committee.
+   - [**model_checkpoint**](./project3_a_task_code/model_checkpoint): saved trained models of task 1a.
 
 2. **project3_b_task_code**:
-   - [**project3_b_task_code.py**](<./project3_b_task_code/project3_b_task_code.py>): code to load trained model to reproduce the result for task 1b, and run it will generate **project3_b_task_code.txt** in workspace. 
-   - [**main.py**](<./project3_b_task_code/main.py>): code to train and validate the model in task 1b.
-   - [**tool.py**](<./project3_b_task_code/tool.py>): functions for loading task 1b data, establishing neural networks, and training, validating, and testing the model.
-   - [**b**](<./project3_b_task_code/b>): training and test dataset of task 1b provided in IC-SHM 2022 Committee.
-   - [**model_checkpoint**](<./project3_b_task_code/model_checkpoint>): saved trained models of task 1b.
+   - [**project3_b_task_code.py**](./project3_b_task_code/project3_b_task_code.py): code to load trained model to reproduce the result for task 1b, and run it will generate **project3_b_task_code.txt** in workspace.
+   - [**main.py**](./project3_b_task_code/main.py): code to train and validate the model in task 1b.
+   - [**tool.py**](./project3_b_task_code/tool.py): functions for loading task 1b data, establishing neural networks, and training, validating, and testing the model.
+   - [**b**](./project3_b_task_code/b): training and test dataset of task 1b provided in IC-SHM 2022 Committee.
+   - [**model_checkpoint**](./project3_b_task_code/model_checkpoint): saved trained models of task 1b.
 
 ## Task 2: Damage Identification
 
@@ -103,16 +105,18 @@ Given the test dataset, our deep neural network could accurately predict the ela
 </div>
 
 ### Folder Structure
+
 **project3_damage_task_code**:
-   - [**project3_damage_task_code.py**](<./project3_damage_task_code/project3_damage_task_code.py>): code to load trained model to reproduce the result for task 2, and run it will generate **project3_damage_task.txt** in workspace.
-   - [**fembeam.py**](<./project3_damage_task_code/fembeam.py>): a class that constructs the finite element model for the three-span continuous bridge.
-   - [**neuralnets.py**](<./project3_damage_task_code/neuralnets.py>): several classes including training data set generation, neural network definition and training, as well as the Bayesian optimization for hyper-parameters tuning.
-   - [**oma.py**](<./project3_damage_task_code/oma.py>): a class for operational modal analysis using frequency domain decomposition.
-   - [**figs_and_tables.py**](<./project3_damage_task_code/figs_and_tables.py>): numerous methods to implement the figures and tables utilized in the report.
-   - [**data**](<./project3_damage_task_code/data>): training and test dataset provided in IC-SHM 2022 Committee, training histories for neural networks and Bayesian optimization.
-   - [**figs**](<./project3_damage_task_code/figs>): figures for random vibration, normalized root mean square error matrix, Bayesian optimization and neural network convergence plots.
-   <!--
-   Python source codes, data, and figures to demonstrate and reproduce the results. The data and figures are organized in individual folders, and the source codes are presented directly in this folder. -->
+
+- [**project3_damage_task_code.py**](./project3_damage_task_code/project3_damage_task_code.py): code to load trained model to reproduce the result for task 2, and run it will generate **project3_damage_task.txt** in workspace.
+- [**fembeam.py**](./project3_damage_task_code/fembeam.py): a class that constructs the finite element model for the three-span continuous bridge.
+- [**neuralnets.py**](./project3_damage_task_code/neuralnets.py): several classes including training data set generation, neural network definition and training, as well as the Bayesian optimization for hyper-parameters tuning.
+- [**oma.py**](./project3_damage_task_code/oma.py): a class for operational modal analysis using frequency domain decomposition.
+- [**figs_and_tables.py**](./project3_damage_task_code/figs_and_tables.py): numerous methods to implement the figures and tables utilized in the report.
+- [**data**](./project3_damage_task_code/data): training and test dataset provided in IC-SHM 2022 Committee, training histories for neural networks and Bayesian optimization.
+- [**figs**](./project3_damage_task_code/figs): figures for random vibration, normalized root mean square error matrix, Bayesian optimization and neural network convergence plots.
+<!--
+Python source codes, data, and figures to demonstrate and reproduce the results. The data and figures are organized in individual folders, and the source codes are presented directly in this folder. -->
 
 ## License
 
