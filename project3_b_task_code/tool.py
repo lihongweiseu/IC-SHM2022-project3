@@ -12,14 +12,14 @@ from scipy.io import savemat, loadmat
 def data(root, input_type):
     global fi
     if input_type == 'clean':
-        fi = np.transpose(loadmat(root + '\\Task 1 data-driven modeling\\project3_b_task_code\\b\\data_clean.mat')
+        fi = np.transpose(loadmat(root + '/project3_b_task_code/b/data_clean.mat')
                           ['data'])  # clean input data
 
     if input_type == 'noise':
-        fi = np.transpose(loadmat(root + '\\Task 1 data-driven modeling\\project3_b_task_code\\b\\data_noised.mat')
+        fi = np.transpose(loadmat(root + '/project3_b_task_code/b/data_noised.mat')
                           ['data_noised'])  # noised input data
 
-    fo = np.transpose(loadmat(root + '\\Task 1 data-driven modeling\\project3_b_task_code\\b\\data_clean.mat')
+    fo = np.transpose(loadmat(root + '/project3_b_task_code/b/data_clean.mat')
                       ['data'])  # output data
 
     u = np.hstack((fi[:, 0:1], fi[:, 1:2]))  # input for task B
@@ -129,7 +129,7 @@ def training(root, model_name, criterion, tend_train, num_layers, hidden_size, t
     print("Total training time: %.3f s" % (end - start))
 
     # save model
-    torch.save(model.state_dict(), root + "\\Task 1 data-driven modeling\\project3_b_task_code\\model_checkpoint\\" +
+    torch.save(model.state_dict(), root + "/project3_b_task_code/model_checkpoint/" +
                str(model_name) + "_" + str(tend_train) + "s_" + str(training_num)+".pt")
 
 
@@ -142,7 +142,7 @@ def validation(root, model_name, criterion, tend_train, num_layers, hidden_size,
     model = models(model_name, hidden_size, num_layers)
 
     # load model for validation
-    model.load_state_dict(torch.load(root + "\\Task 1 data-driven modeling\\project3_b_task_code\\model_checkpoint\\" +
+    model.load_state_dict(torch.load(root + "/project3_b_task_code/model_checkpoint/" +
                                      str(model_name) + "_" + str(tend_train) + "s_" + str(training_num) + ".pt"))
 
     # load data for validation
@@ -158,10 +158,6 @@ def validation(root, model_name, criterion, tend_train, num_layers, hidden_size,
     # for validate whole 10000-second length
     if model_input == 'whole length':
         y_pred = model(u_torch)
-    # for validate last 10-second testing length
-    if model_input == 'last 10s length':
-        y_pred = model(u_torch[-1000:, :])
-        y_ref_torch = y_ref_torch[-1000:, :]
 
     # extract A3 to A5 prediction for task B
     y_pred_3, y_pred_4, y_pred_5 = y_pred[:, 0], y_pred[:, 1], y_pred[:, 2]
@@ -175,12 +171,6 @@ def validation(root, model_name, criterion, tend_train, num_layers, hidden_size,
     print(f"MSE of Task 1b, A4: {mse_4.cpu().detach().numpy()}")
     print(f"MSE of Task 1b, A5: {mse_5.cpu().detach().numpy()}")
 
-    # save last 10-second ground truth and prediction for drawing graph
-    if model_input == 'last 10s length':
-        savemat(root + "\\Task 1 data-driven modeling\\project3_b_task_code\\last_10s_sample\\" + str(model_name) + "_"
-                + str(tend_train) + "s_" + str(input_type_valid) + "_" + str(training_num) + '.mat',
-                {'pr': np.transpose(y_pred.detach().numpy()), 'gt': np.transpose(y_ref_torch.detach().numpy())})
-
 
 # define testing function
 def testing(root, model_name, tend_train, num_layers, hidden_size, training_num):
@@ -189,10 +179,10 @@ def testing(root, model_name, tend_train, num_layers, hidden_size, training_num)
     model = models(model_name, hidden_size, num_layers)
 
     # load model for testing
-    model.load_state_dict(torch.load(root + "\\Task 1 data-driven modeling\\project3_b_task_code\\model_checkpoint\\" +
+    model.load_state_dict(torch.load(root + "/project3_b_task_code/model_checkpoint/" +
                                      str(model_name) + "_" + str(tend_train) + "s_" + str(training_num) + ".pt"))
     # load data for testing
-    fi = np.transpose(loadmat(root + "\\Task 1 data-driven modeling\\project3_b_task_code\\b\\data_noised_testset2.mat")
+    fi = np.transpose(loadmat(root + "/project3_b_task_code/b/data_noised_testset2.mat")
                       ['data_noised'])
     u = np.hstack((fi[:, 0:1], fi[:, 1:2]))  # input for task B
     u_torch = torch.tensor(u)  # convert to tensor data

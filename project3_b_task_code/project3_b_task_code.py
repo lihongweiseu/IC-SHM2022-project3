@@ -17,5 +17,5 @@ y_pred = testing(root, model_name, tend_train,
                  num_layers, hidden_size, training_num)
 y = np.transpose(y_pred.detach().numpy())
 
-save_path = root + '\\Task 1 data-driven modeling\\project3_b_task_code\\project3_b_task.txt'
+save_path = root + '/project3_b_task_code/project3_b_task.txt'
 np.savetxt(save_path, y, fmt='%f', delimiter=",")
