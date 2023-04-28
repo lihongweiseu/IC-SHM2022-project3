@@ -41,8 +41,6 @@ import scipy.io as io
 ### Figure: Computed -log10(NRMSE) between each two different first mode shapes ###
 # def nrmse(a, b):
 #     return LA.norm(a-b, 2)/LA.norm(a, 2)
-
-
 # A = np.array([1, 0.8, 0.96, 1.1, 0.48, 0.6, 0.4, 0.36, 0.53, 0.62])
 # rho = np.array([1, 5.6, 4.2, 2.1, 3.0, 1.2, 3.4, 0.3, 1.5, 0.4])*1e4
 # E = np.array([2, 3.4, 0.2, 0.8, 1.2, 4.2, 5.3, 6.6, 2.4, 0.5])*1e10
@@ -119,7 +117,6 @@ import scipy.io as io
 # ax.tick_params(axis='x', direction='in')
 # ax.tick_params(axis='y', direction='in')
 # ax.grid()
-
 # ax = fig.add_subplot(212)
 # f1, pxx1 = vib_analysis.psd_analysis(dim=0)
 # f2, pxx2 = vib_analysis.psd_analysis(dim=1)
@@ -206,6 +203,7 @@ import scipy.io as io
 #             dpi=1200)
 # plt.show()
 
+
 ### Figure: Bayesian Optimization convergence curve ###
 # from skopt import load
 # from skopt.plots import plot_convergence
@@ -226,7 +224,6 @@ import scipy.io as io
 #     relu_vec.append(np.min(res_relu.func_vals[:i+1]))
 #     sigmoid_vec.append(np.min(res_sigmoid.func_vals[:i+1]))
 #     tanh_vec.append(np.min(res_tanh.func_vals[:i+1]))
-
 # col = ['k', 'b', 'r']
 # cm = 1 / 2.54
 # fig = plt.figure(figsize=(10 * cm, 7 * cm))
@@ -260,6 +257,7 @@ import scipy.io as io
 # plt.savefig('./figs/F_bayesopt.pdf',
 #             dpi=1200)
 # plt.show()
+
 
 ### Figure: Neural networks training convergence curve ###
 # from matplotlib import pyplot as plt
@@ -296,7 +294,6 @@ import scipy.io as io
 
 
 ### Table: Predicted damage factors from train_dataset 1-11 using neural networks###
-
 # os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 # train_data_path = r'./data/train_dataset/'
 # neural_net_path = r'./data/neural_nets/'
