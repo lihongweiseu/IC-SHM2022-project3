@@ -5,7 +5,7 @@ The repository contains the code and documentation for our team's entry in the 3
 - Data-driven modeling
 - Damage identification
 
-## Getting Started
+## Getting Started1
 
 To get started with our solution, you can follow these steps:
 
