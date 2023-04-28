@@ -75,14 +75,14 @@ import scipy.io as io
 # ax.yaxis.set_ticks_position('none')
 # ax.tick_params(axis='x', labelsize=8)
 # ax.tick_params(axis='y', labelsize=8)
-# plt.savefig('./Task 2 damage identification/project3_damage_task_code/figs/F_nrmse_mtx.pdf',
+# plt.savefig('./figs/F_nrmse_mtx.pdf',
 #             dpi=1200, bbox_inches='tight')
 # plt.show()
 
 
 ### Figure: an instance of time-domain random vibration signals and the corresponding frequency domain representations ###
 # mat = io.loadmat(
-#     r'./Task 2 damage identification/project3_damage_task_code/data/train_dataset/train_8.mat')
+#     r'./data/train_dataset/train_8.mat')
 # mtx = mat['A']
 # vib_analysis = rand_vib(signal_mtx=mtx)
 # num = 2000
@@ -151,14 +151,14 @@ import scipy.io as io
 # ax.tick_params(axis='y', which='minor', direction='in')
 # ax.grid()
 # fig.tight_layout(pad=0.1)
-# plt.savefig(r'./Task 2 damage identification/project3_damage_task_code/figs/F_threesignal.pdf',  format="pdf",
+# plt.savefig(r'./figs/F_threesignal.pdf',  format="pdf",
 #             dpi=1200)
 # plt.show()
 
 
 ### Figure: 5 PSDs of train_1 ###
 # mat = io.loadmat(
-#     r'./Task 2 damage identification/project3_damage_task_code/data/train_dataset/train_1.mat')
+#     r'./data/train_dataset/train_1.mat')
 # mtx = mat['A']
 # vib_analysis = rand_vib(signal_mtx=mtx)
 # num = 2000
@@ -202,7 +202,7 @@ import scipy.io as io
 # ax.tick_params(axis='y', which='minor', direction='in')
 # ax.grid()
 # fig.tight_layout(pad=0.1)
-# plt.savefig(r'./Task 2 damage identification/project3_damage_task_code/figs/F_fivepsd.pdf',  format="pdf",
+# plt.savefig(r'./figs/F_fivepsd.pdf',  format="pdf",
 #             dpi=1200)
 # plt.show()
 
@@ -211,7 +211,7 @@ import scipy.io as io
 # from skopt.plots import plot_convergence
 # from neuralnets import Establish_nn_bayes_opt
 # from matplotlib import pyplot as plt
-# neural_net_path = r'./Task 2 damage identification/project3_damage_task_code/data/neural_nets/'
+# neural_net_path = r'./data/neural_nets/'
 # res_relu = load(neural_net_path+'hist_relu.pkl')
 # res_sigmoid = load(neural_net_path+'hist_sigmoid.pkl')
 # res_tanh = load(neural_net_path+'hist_tanh.pkl')
@@ -257,14 +257,14 @@ import scipy.io as io
 # ax.grid()
 # ax.tick_params(axis='y', which='minor', direction='in')
 # fig.tight_layout(pad=0.1)
-# plt.savefig('./Task 2 damage identification/project3_damage_task_code/figs/F_bayesopt.pdf',
+# plt.savefig('./figs/F_bayesopt.pdf',
 #             dpi=1200)
 # plt.show()
 
 ### Figure: Neural networks training convergence curve ###
 # from matplotlib import pyplot as plt
 # import torch
-# neural_net_path = r'./Task 2 damage identification/project3_damage_task_code/data/neural_nets/'
+# neural_net_path = r'./data/neural_nets/'
 # train_loss = np.load(neural_net_path+'train_loss_tanh512_6_1.1_1.0.npy')
 # test_loss = np.load(neural_net_path+'test_loss_tanh512_6_1.1_1.0.npy')
 # x = np.arange(40)+1
@@ -290,7 +290,7 @@ import scipy.io as io
 # ax.grid()
 # ax.set_xlim([0, 40])
 # ax.set_ylim([1e-7, 1e-3])
-# plt.savefig('./Task 2 damage identification/project3_damage_task_code/figs/F_NN_converge.pdf',
+# plt.savefig('./figs/F_NN_converge.pdf',
 #             dpi=1200, bbox_inches='tight')
 # plt.show()
 
@@ -298,8 +298,8 @@ import scipy.io as io
 ### Table: Predicted damage factors from train_dataset 1-11 using neural networks###
 
 # os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-# train_data_path = r'./Task 2 damage identification/project3_damage_task_code/data/train_dataset/'
-# neural_net_path = r'./Task 2 damage identification/project3_damage_task_code/data/neural_nets/'
+# train_data_path = r'./data/train_dataset/'
+# neural_net_path = r'./data/neural_nets/'
 # # Neural network structure
 # num_neuron = 512
 # num_hidden_layer = 6
