@@ -268,5 +268,5 @@ def use_res_train_nn(data_path, use_norm):
     # bayes_opt_nn('sigmoid', data_path, num_max_iter=15, use_norm=True)
     # bayes_opt_nn('relu', data_path, num_max_iter=15, use_norm=True)
 
-    # train the nn with the best parameters
+    # # train the nn with the best parameters
     # use_res_train_nn(data_path, use_norm=True)
