@@ -12,14 +12,14 @@ from scipy.io import savemat, loadmat
 def data(root, input_type):
     global fi
     if input_type == 'clean':
-        fi = np.transpose(loadmat(root + '/project3_b_task_code/b/data_clean.mat')
+        fi = np.transpose(loadmat(root + '/b/data_clean.mat')
                           ['data'])  # clean input data
 
     if input_type == 'noise':
-        fi = np.transpose(loadmat(root + '/project3_b_task_code/b/data_noised.mat')
+        fi = np.transpose(loadmat(root + '/b/data_noised.mat')
                           ['data_noised'])  # noised input data
 
-    fo = np.transpose(loadmat(root + '/project3_b_task_code/b/data_clean.mat')
+    fo = np.transpose(loadmat(root + '/b/data_clean.mat')
                       ['data'])  # output data
 
     u = np.hstack((fi[:, 0:1], fi[:, 1:2]))  # input for task B
@@ -129,7 +129,7 @@ def training(root, model_name, criterion, tend_train, num_layers, hidden_size, t
     print("Total training time: %.3f s" % (end - start))
 
     # save model
-    torch.save(model.state_dict(), root + "/project3_b_task_code/model_checkpoint/" +
+    torch.save(model.state_dict(), root + "/model_checkpoint/" +
                str(model_name) + "_" + str(tend_train) + "s_" + str(training_num)+".pt")
 
 
@@ -142,7 +142,7 @@ def validation(root, model_name, criterion, tend_train, num_layers, hidden_size,
     model = models(model_name, hidden_size, num_layers)
 
     # load model for validation
-    model.load_state_dict(torch.load(root + "/project3_b_task_code/model_checkpoint/" +
+    model.load_state_dict(torch.load(root + "/model_checkpoint/" +
                                      str(model_name) + "_" + str(tend_train) + "s_" + str(training_num) + ".pt"))
 
     # load data for validation
@@ -179,10 +179,10 @@ def testing(root, model_name, tend_train, num_layers, hidden_size, training_num)
     model = models(model_name, hidden_size, num_layers)
 
     # load model for testing
-    model.load_state_dict(torch.load(root + "/project3_b_task_code/model_checkpoint/" +
+    model.load_state_dict(torch.load(root + "/model_checkpoint/" +
                                      str(model_name) + "_" + str(tend_train) + "s_" + str(training_num) + ".pt"))
     # load data for testing
-    fi = np.transpose(loadmat(root + "/project3_b_task_code/b/data_noised_testset2.mat")
+    fi = np.transpose(loadmat(root + "/b/data_noised_testset2.mat")
                       ['data_noised'])
     u = np.hstack((fi[:, 0:1], fi[:, 1:2]))  # input for task B
     u_torch = torch.tensor(u)  # convert to tensor data
