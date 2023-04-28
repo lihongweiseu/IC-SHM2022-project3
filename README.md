@@ -11,7 +11,7 @@ To get started with our solution, you can follow these steps:
 
 - Clone this repository to your local machine
 - Check if the installed version of the packages meets the requirements
-- Set your workspace in VSCode or working directory in Pycharm as the folder IC-SHM2022-project3
+- Set the folder IC-SHM2022-project3 as your workspace in VSCode or working directory in Pycharm
 
 - Run [project3_a_task_code.py](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task_code.py>) in the folder [project3_a_task_code](<./Task 1 data-driven modeling/project3_a_task_code>) to obtain prediction [project3_a_task_code.txt](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task.txt>) for task 1a
 
