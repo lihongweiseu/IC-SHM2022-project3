@@ -2,28 +2,31 @@
 
 The repository contains the code and documentation for our team's entry in the 3rd International Competition for Structural Health Monitoring(IC-SHM 2022) project 3. Our solution is designed to solve the following 2 tasks:
 
-- Data-driven modeling
-- Damage identification
+- Task 1: data-driven modeling
+- Task 2: damage identification
 
-## Getting Started1
+In the root directory, the following three .txt files are the required results for two tasks.
+- Task 1a: **project3_a_task_code.txt**
+- Task 1b: **project3_b_task_code.txt**
+- Task 2: **project3_damage_task.txt**
+- 
+## Getting Started
 
 To get started with our solution, you can follow these steps:
 
 - Clone this repository to your local machine
 - Check if the installed version of the packages meets the requirements
-- Set the folder IC-SHM2022-project3 as your workspace in VScode or working directory in PyCharm
-
-- Run [project3_a_task_code.py](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task_code.py>) in the folder [project3_a_task_code](<./Task 1 data-driven modeling/project3_a_task_code>) to obtain prediction [project3_a_task_code.txt](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task.txt>) for task 1a
-
-- Run [project3_b_task_code.py](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task_code.py>) in the folder [project3_b_task_code](<./Task 1 data-driven modeling/project3_b_task_code>) to obtain prediction [project3_b_task_code.txt](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task.txt>) for task 1b
-
-- Run [project3_damage_task_code.py](<./Task 2 damage identification/project3_damage_task_code/project3_damage_task_code.py>) in the folder [project3_damage_task_code](<./Task 2 damage identification/project3_damage_task_code>) to obtain the results of elastic modulus reduction in [project3_damage_task.txt](<./Task 2 damage identification/project3_damage_task.txt>) for task 2
+- PyCharm or VScode is recommended to run codes
+- For task 1a, set the folder **project3_a_task_code** as workspace, run [project3_a_task_code.py](<./project3_a_task_code/project3_a_task_code.py>) to reproduce **project3_a_task_code.txt**.
+- For task 1b, set the folder **project3_b_task_code** as workspace, run [project3_b_task_code.py](<./project3_b_task_code/project3_b_task_code.py>) to reproduce **project3_b_task_code.txt**.
+- For task 2, set the folder **project3_damage_task_code** as workspace, run [project3_damage_task_code.py](<./project3_damage_task_code/project3_damage_task_code.py>) to reproduce **project3_damage_task.txt**.
 
 ### Requirements
 
 - Python >= 3.8.0
 - Pytorch >= 1.12.1
 - SciPy >= 1.9.3
+- scikit-optimize >= 0.9.0
 
 ## Task 1: Data-driven Modeling
 
@@ -55,24 +58,19 @@ The effectiveness of the model is validated by using data noised.mat. The MSEs o
 
 ### Folder Structure
 
-1. [**project3_a_task_code**](<./Task 1 data-driven modeling/project3_a_task_code>):
+1. **project3_a_task_code**:
+   - [**project3_a_task_code.py**](<./project3_a_task_code/project3_a_task_code.py>): code to load trained model to reproduce the result for task 1a, and run it will generate **project3_a_task_code.txt** in workspace. 
+   - [**main.py**](<./project3_a_task_code/main.py>): code to train and validate the model in task 1a.
+   - [**tool.py**](<./project3_a_task_code/tool.py>): functions for loading task 1a data, establishing neural networks, and training, validating, and testing the model.
+   - [**a**](<./project3_a_task_code/a>): training and test dataset of task 1a provided by IC-SHM 2022 Committee.
+   - [**model_checkpoint**](<./project3_a_task_code/model_checkpoint>): saved trained models of task 1a.
 
-   - [**project3_a_task.txt**](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task.txt>): The predictions in task 1a required by IC-SHM 2022 Committee.
-   - [**project3_a_task_code.py**](<./Task 1 data-driven modeling/project3_a_task_code/project3_a_task_code.py>): Routines to test the model for predictions in task 1a.
-   - [**main.py**](<./Task 1 data-driven modeling/project3_a_task_code/main.py>): Routines to train and validate the model in task 1a.
-   - [**tool.py**](<./Task 1 data-driven modeling/project3_a_task_code/tool.py>): Functions for loading task 1a data, establishing neural networks, and training, validating, and testing the model.
-   - [**a**](<./Task 1 data-driven modeling/project3_a_task_code/a>): Training and test dataset of task 1a provided by IC-SHM 2022 Committee.
-   - [**model_checkpoint**](<./Task 1 data-driven modeling/project3_a_task_code/model_checkpoint>): Saved model weights for validating and testing the model in task 1a.
-   - [**last_10s_sample**](<./Task 1 data-driven modeling/project3_a_task_code/last_10s_sample>): Ground truths and predictions extracted from the last 10-second task 1a data for comparison.
-
-2. [**project3_b_task_code**](<./Task 1 data-driven modeling/project3_b_task_code>):
-   - [**project3_b_task.txt**](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task.txt>): The predictions in task 1b required by IC-SHM 2022 Committee.
-   - [**project3_b_task_code.py**](<./Task 1 data-driven modeling/project3_b_task_code/project3_b_task_code.py>): Routines to test the model for predictions in task 1b.
-   - [**main.py**](<./Task 1 data-driven modeling/project3_b_task_code/main.py>): Routines to train and validate the model in task 1b.
-   - [**tool.py**](<./Task 1 data-driven modeling/project3_b_task_code/tool.py>): Functions for loading task 1b data, establishing neural networks, and training, validating, and testing the model.
-   - [**b**](<./Task 1 data-driven modeling/project3_b_task_code/b>): Training and test dataset of task 1b provided in IC-SHM 2022 Committee.
-   - [**model_checkpoint**](<./Task 1 data-driven modeling/project3_b_task_code/model_checkpoint>): Saved model weights for validating and testing the model in task 1b.
-   - [**last_10s_sample**](<./Task 1 data-driven modeling/project3_b_task_code/last_10s_sample>): Ground truths and predictions extracted from the last 10-second task 1b data for comparison.
+2. **project3_b_task_code**:
+   - [**project3_b_task_code.py**](<./project3_b_task_code/project3_b_task_code.py>): code to load trained model to reproduce the result for task 1b, and run it will generate **project3_b_task_code.txt** in workspace. 
+   - [**main.py**](<./project3_b_task_code/main.py>): code to train and validate the model in task 1b.
+   - [**tool.py**](<./project3_b_task_code/tool.py>): functions for loading task 1b data, establishing neural networks, and training, validating, and testing the model.
+   - [**b**](<./project3_b_task_code/b>): training and test dataset of task 1b provided in IC-SHM 2022 Committee.
+   - [**model_checkpoint**](<./project3_b_task_code/model_checkpoint>): saved trained models of task 1b.
 
 ## Task 2: Damage Identification
 
@@ -105,18 +103,14 @@ Given the test dataset, our deep neural network could accurately predict the ela
 </div>
 
 ### Folder Structure
-
-1. [**project3_damage_task.txt**](<./Task 2 damage identification/project3_damage_task.txt>): The elastic modulus reduction rates of three units for 6 test data sets.
-
-2. [**project3_damage_task_code**](<./Task 2 damage identification/project3_damage_task_code>):
-
-   - [**fembeam.py**](<./Task 2 damage identification/project3_damage_task_code/fembeam.py>): A class that constructs the finite element model for the three-span continuous bridge.
-   - [**neuralnets.py**](<./Task 2 damage identification/project3_damage_task_code/neuralnets.py>): Several classes including training data set generation, neural network definition and training, as well as the Bayesian optimization for hyper-parameters tuning.
-   - [**oma.py**](<./Task 2 damage identification/project3_damage_task_code/oma.py>): A class for operational modal analysis using frequency domain decomposition.
-   - [**figs_and_tables.py**](<./Task 2 damage identification/project3_damage_task_code/figs_and_tables.py>): Numerous methods to implement the figures and tables utilized in the report.
-   - [**project3_damage_task_code.py**](<./Task 2 damage identification/project3_damage_task_code/project3_damage_task_code.py>): Routines to predict the reduction of elastic modulus reduction rates.
-   - [**data**](<./Task 2 damage identification/project3_damage_task_code/data>): Training and test dataset provided in IC-SHM 2022 Committee, training histories for neural networks and Bayesian optimization.
-   - [**figs**](<./Task 2 damage identification/project3_damage_task_code/figs>): Figures for random vibration, normalized root mean square error matrix, Bayesian optimization and neural network convergence plots.
+**project3_damage_task_code**:
+   - [**project3_damage_task_code.py**](<./project3_damage_task_code/project3_damage_task_code.py>): code to load trained model to reproduce the result for task 2, and run it will generate **project3_damage_task.txt** in workspace.
+   - [**fembeam.py**](<./project3_damage_task_code/fembeam.py>): a class that constructs the finite element model for the three-span continuous bridge.
+   - [**neuralnets.py**](<./project3_damage_task_code/neuralnets.py>): several classes including training data set generation, neural network definition and training, as well as the Bayesian optimization for hyper-parameters tuning.
+   - [**oma.py**](<./project3_damage_task_code/oma.py>): a class for operational modal analysis using frequency domain decomposition.
+   - [**figs_and_tables.py**](<./project3_damage_task_code/figs_and_tables.py>): numerous methods to implement the figures and tables utilized in the report.
+   - [**data**](<./project3_damage_task_code/data>): training and test dataset provided in IC-SHM 2022 Committee, training histories for neural networks and Bayesian optimization.
+   - [**figs**](<./project3_damage_task_code/figs>): figures for random vibration, normalized root mean square error matrix, Bayesian optimization and neural network convergence plots.
    <!--
    Python source codes, data, and figures to demonstrate and reproduce the results. The data and figures are organized in individual folders, and the source codes are presented directly in this folder. -->
 
