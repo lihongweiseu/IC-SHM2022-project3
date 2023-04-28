@@ -9,7 +9,7 @@ In the root directory, the following three .txt files are the required results f
 - Task 1a: **project3_a_task_code.txt**
 - Task 1b: **project3_b_task_code.txt**
 - Task 2: **project3_damage_task.txt**
-- 
+
 ## Getting Started
 
 To get started with our solution, you can follow these steps:
