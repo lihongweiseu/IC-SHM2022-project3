@@ -5,7 +5,7 @@ import numpy as np
 from tool import testing
 from torch import nn
 
-root = '.'  # Please change to the root in your conditions.
+root = '.'  # You must set the folder IC-SHM2022-project3 as the workspace.
 criterion = nn.MSELoss()  # MSE loss
 tend_train = 10
 hidden_size = 40
