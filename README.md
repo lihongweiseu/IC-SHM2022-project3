@@ -71,7 +71,7 @@ The effectiveness of the model is validated by using data noised.mat. The MSEs o
    - [**project3_b_task_code.py**](./project3_b_task_code/project3_b_task_code.py): code to load trained model to reproduce the result for task 1b, and run it will generate **project3_b_task_code.txt** in workspace.
    - [**main.py**](./project3_b_task_code/main.py): code to train and validate the model in task 1b.
    - [**tool.py**](./project3_b_task_code/tool.py): functions for loading task 1b data, establishing neural networks, and training, validating, and testing the model.
-   - [**b**](./project3_b_task_code/b): training and test dataset of task 1b provided in IC-SHM 2022 Committee.
+   - [**b**](./project3_b_task_code/b): training and test dataset of task 1b provided by IC-SHM 2022 Committee.
    - [**model_checkpoint**](./project3_b_task_code/model_checkpoint): saved trained models of task 1b.
 
 ## Task 2: Damage Identification
