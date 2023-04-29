@@ -110,10 +110,10 @@ Given the test dataset, our deep neural network could accurately predict the ela
 
 - [**project3_damage_task_code.py**](./project3_damage_task_code/project3_damage_task_code.py): code to load trained model to reproduce the result for task 2, and run it will generate **project3_damage_task.txt** in workspace.
 - [**fembeam.py**](./project3_damage_task_code/fembeam.py): a class that constructs the finite element model for the three-span continuous bridge.
-- [**neuralnets.py**](./project3_damage_task_code/neuralnets.py): several classes including training data set generation, neural network definition and training, as well as the Bayesian optimization for hyper-parameters tuning.
+- [**neuralnets.py**](./project3_damage_task_code/neuralnets.py): several classes including training and validation data set generation, neural network definition and training, as well as the Bayesian optimization for hyper-parameters tuning.
 - [**oma.py**](./project3_damage_task_code/oma.py): a class for operational modal analysis using frequency domain decomposition.
 - [**figs_and_tables.py**](./project3_damage_task_code/figs_and_tables.py): numerous methods to implement the figures and tables utilized in the report.
-- [**data**](./project3_damage_task_code/data): training and test dataset provided in IC-SHM 2022 Committee, training histories for neural networks and Bayesian optimization.
+- [**data**](./project3_damage_task_code/data): test dataset provided by IC-SHM 2022 Committee, training histories for neural networks and Bayesian optimization, and several trained neural networks of different activation functions.
 - [**figs**](./project3_damage_task_code/figs): figures for random vibration, normalized root mean square error matrix, Bayesian optimization and neural network convergence plots.
 <!--
 Python source codes, data, and figures to demonstrate and reproduce the results. The data and figures are organized in individual folders, and the source codes are presented directly in this folder. -->
